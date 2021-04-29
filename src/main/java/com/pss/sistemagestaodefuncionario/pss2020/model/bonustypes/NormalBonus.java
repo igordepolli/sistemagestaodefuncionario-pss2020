@@ -1,0 +1,18 @@
+package com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes;
+
+import com.pss.sistemagestaodefuncionario.pss2020.model.Bonus;
+import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
+import java.time.LocalDate;
+
+public class NormalBonus extends Bonus {
+
+    public NormalBonus(String description, LocalDate date) {
+        super(description, date);
+    }
+    
+    @Override
+    public void calculate(Employee employee) throws Exception {
+        value = 100.00;
+    }
+    
+}
