@@ -34,6 +34,7 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Buscar Funcionário");
+        setPreferredSize(new java.awt.Dimension(714, 502));
 
         jLabel1.setText("Nome");
 
@@ -95,7 +96,7 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
                         .addComponent(tfdName, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnSearch)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

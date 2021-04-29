@@ -12,19 +12,18 @@ public class ServiceTimeBonus extends Bonus {
 
     @Override
     public void calculate(Employee employee) throws Exception {
+        double bonusPercentage = getBonusPercentage(employee.getYearsOfService());
+        value = employee.getWage() + (employee.getWage() * bonusPercentage);
+    }
+    
+    private double getBonusPercentage(int yearsOfService) {
+        if (yearsOfService >= 20) { return 0.15; }
+        if (yearsOfService >= 16) { return 0.1; }
+        if (yearsOfService >= 11) { return 0.08; }
+        if (yearsOfService >= 6) { return 0.03; }
+        if (yearsOfService >= 1) { return 0.02; }
         
-        if (employee.getYearsOfService() >= 1 && employee.getYearsOfService() <= 5) {
-            value = employee.getWage() + (employee.getWage() * 0.02);
-        } else if (employee.getYearsOfService() >= 6 && employee.getYearsOfService() <= 10) {
-            value = employee.getWage() + (employee.getWage() * 0.03); 
-        } else if (employee.getYearsOfService() >= 11 && employee.getYearsOfService() <= 15) {
-            value = employee.getWage() + (employee.getWage() * 0.08); 
-        } else if (employee.getYearsOfService() >= 16 && employee.getYearsOfService() <= 20) {
-            value = employee.getWage() + (employee.getWage() * 0.1); 
-        } else if (employee.getYearsOfService() >= 20) {
-            value = employee.getWage() + (employee.getWage() * 0.15); 
-        }
-        
+        return 0;
     }
     
 }

@@ -12,22 +12,16 @@ public class OccupationBonus extends Bonus {
 
     @Override
     public void calculate(Employee employee) throws Exception {
-        switch (employee.getOccupation()) {
-            case "Diretor":
-                value = 150;
-                break;
-            case "Gerente":
-                value = 100;
-                break;
-            case "Vendedor":
-                value = 50;
-                break;
-            case "Zelador":
-                value = 20;
-                break;
-            default:
-                break;
-        }
+        value = getBonus(employee.getOccupation());
+    }
+    
+    private double getBonus(String occupation) {
+        if (occupation.equals("Diretor")) { return 150; }
+        if (occupation.equals("Gerente")) { return 100; }
+        if (occupation.equals("Vendedor")) { return 50; }
+        if (occupation.equals("Zelador")) { return 20; }
+        
+        return 0;
     }
     
 }

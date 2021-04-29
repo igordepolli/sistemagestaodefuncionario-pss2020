@@ -47,7 +47,6 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Manter Funcionário");
-        setResizable(false);
 
         jLabel1.setText("Cargo");
 
@@ -178,7 +177,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         );
 
         JTextFieldFormatoMoeda nf = (JTextFieldFormatoMoeda) tfdWage;
-        nf.setLimit(6);
+        nf.setLimit(8);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

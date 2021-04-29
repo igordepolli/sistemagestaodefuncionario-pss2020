@@ -12,13 +12,16 @@ public class AttendanceBonus extends Bonus {
 
     @Override
     public void calculate(Employee employee) throws Exception {
-        if (employee.getNumberOfAbsence() == 0) {
-            value = employee.getWage() + (employee.getWage() * 0.15);
-        } else if (employee.getNumberOfAbsence() >= 1 && employee.getNumberOfAbsence() <= 3) {
-            value = employee.getWage() + (employee.getWage() * 0.1);
-        } else {
-            value = employee.getWage() + (employee.getWage() * 0.05);
-        }
+        double bonusPercentage = getBonusPercentage(employee.getNumberOfAbsence());
+        value = employee.getWage() + (employee.getWage() * bonusPercentage);
+    }
+    
+    private double getBonusPercentage(int numberOfAbsence) {
+        if (numberOfAbsence == 0) { return 0.10; }
+        if (numberOfAbsence >= 1 && numberOfAbsence <= 3) { return 0.05; }
+        if (numberOfAbsence >= 4) { return 0.01; }
+        
+        return 0;
     }
 
 }
