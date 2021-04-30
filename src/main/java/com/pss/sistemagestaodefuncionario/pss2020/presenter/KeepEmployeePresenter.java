@@ -9,11 +9,13 @@ import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.NormalBonus;
 import com.pss.sistemagestaodefuncionario.pss2020.model.logs.ManagerLog;
 import com.pss.sistemagestaodefuncionario.pss2020.utils.DateManipulation;
 import com.pss.sistemagestaodefuncionario.pss2020.view.KeepEmployeeView;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 public class KeepEmployeePresenter {
@@ -54,8 +56,18 @@ public class KeepEmployeePresenter {
             }
         });
     }
+    
+    public void clearListeners() {
+        for (Component component : view.getParent().getComponents()) {
+            if (component instanceof JButton) {
+                for (ActionListener actionListener : ((JButton) component).getActionListeners()) {
+                    ((JButton) component).removeActionListener(actionListener);
+                }
+            }
+        }
+    }
 
-    private void addEmployee() throws Exception {
+    public void addEmployee() throws Exception {
         if (view.getChbEmployeeOfTheMonth().isSelected()) {
             checkIfEmployeeOfTheMonthIsUnique();
         }
@@ -114,7 +126,7 @@ public class KeepEmployeePresenter {
         }
     }
 
-    private void cleanFields() {
+    public void cleanFields() {
         view.getTfdName().setText("");
         view.getTfdSalary().setText("");
         view.getTfdAbsence().setText("");

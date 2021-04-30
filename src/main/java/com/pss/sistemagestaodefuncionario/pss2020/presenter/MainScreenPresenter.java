@@ -43,7 +43,6 @@ public class MainScreenPresenter {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     view.add(keepEmployeePresenter.getView());
-                    
                     keepEmployeePresenter.getView().setVisible(true);
                 }
             });
