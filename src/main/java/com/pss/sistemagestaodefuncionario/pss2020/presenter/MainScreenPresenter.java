@@ -32,7 +32,7 @@ public class MainScreenPresenter {
     }
 
     private void initPresenters() throws Exception {
-        keepEmployeePresenter = new KeepEmployeePresenter(employeeCollection, managerLog);
+        keepEmployeePresenter = new KeepEmployeePresenter(null, employeeCollection);
         searchEmployeePresenter = new SearchEmployeePresenter(employeeCollection, managerLog);
         calculateWagesPresenter = new CalculateWagesPresenter(employeeCollection, managerLog);
     }

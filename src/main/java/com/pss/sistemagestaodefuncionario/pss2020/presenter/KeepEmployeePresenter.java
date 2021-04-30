@@ -6,59 +6,37 @@ import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
 import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.GenerousBonus;
 import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.NormalBonus;
-import com.pss.sistemagestaodefuncionario.pss2020.model.logs.ManagerLog;
+import com.pss.sistemagestaodefuncionario.pss2020.presenter.command.KeepEmployeePresenterCommand;
+import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
+import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterState;
 import com.pss.sistemagestaodefuncionario.pss2020.utils.DateManipulation;
 import com.pss.sistemagestaodefuncionario.pss2020.view.KeepEmployeeView;
 import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 
 public class KeepEmployeePresenter {
 
     private final KeepEmployeeView view;
-    private final EmployeeCollection employeeCollection;
-    private final ManagerLog managerLog;
+    private KeepEmployeePresenterCommand command;
+    private KeepEmployeePresenterState state;
+    private Employee employee;
+    private EmployeeCollection employeeCollection;
 
-    public KeepEmployeePresenter(EmployeeCollection employeeCollection, ManagerLog managerLog) throws Exception {
+    public KeepEmployeePresenter(Employee employee, EmployeeCollection employeeCollection) throws Exception {
+        this.employee = employee;
         this.employeeCollection = employeeCollection;
-        this.managerLog = managerLog;
-
         view = new KeepEmployeeView();
         view.setLocation(20, 20);
-
-        initListeners();
-    }
-
-    private void initListeners() {
-        view.getBtnClose().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                view.dispose();
-            }
-        });
-
-        view.getBtnSave().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    checkFieldsIsEmpty();
-                    addEmployee();
-                    JOptionPane.showMessageDialog(view, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-                    cleanFields();
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
+        
+        state = defineState();
     }
     
     public void clearListeners() {
-        for (Component component : view.getParent().getComponents()) {
+        for (Component component : getView().getParent().getComponents()) {
             if (component instanceof JButton) {
                 for (ActionListener actionListener : ((JButton) component).getActionListeners()) {
                     ((JButton) component).removeActionListener(actionListener);
@@ -67,15 +45,7 @@ public class KeepEmployeePresenter {
         }
     }
 
-    public void addEmployee() throws Exception {
-        if (view.getChbEmployeeOfTheMonth().isSelected()) {
-            checkIfEmployeeOfTheMonthIsUnique();
-        }
-        Employee employee = getTextInFieldsAndCreateEmployee();
-        employeeCollection.addEmployee(employee);
-    }
-
-    private Employee getTextInFieldsAndCreateEmployee() throws Exception {
+    public Employee getTextInFieldsAndCreateEmployee() throws Exception {
         String id = generateRandomId();
         String occupation = String.valueOf(view.getCbxOccupation().getSelectedItem());
         String name = view.getTfdName().getText();
@@ -83,13 +53,13 @@ public class KeepEmployeePresenter {
         int absences = Integer.parseInt(view.getTfdAbsence().getText());
         boolean employeeOfTheMonth = view.getChbEmployeeOfTheMonth().isSelected();
         LocalDate dateAdmission = DateManipulation.stringToLocalDate(view.getFfdAdmission().getText());
-        BonusCollection bonusCollection = addBonusInCollection();
+        BonusCollection bonusCollection = addFirstBonusInCollection();
         double salary = getAndConvertSalaryField();
 
         return new Employee(id, name, age, salary, occupation, bonusCollection, absences, dateAdmission, employeeOfTheMonth);
     }
 
-    private BonusCollection addBonusInCollection() {
+    private BonusCollection addFirstBonusInCollection() {
         Bonus bonus = getInstanceOfBonus();
 
         return new BonusCollection(bonus);
@@ -101,7 +71,7 @@ public class KeepEmployeePresenter {
         return wageValueBigDecimal.doubleValue();
     }
 
-    private void checkIfEmployeeOfTheMonthIsUnique() throws Exception {
+    public void checkIfEmployeeOfTheMonthIsUnique(EmployeeCollection employeeCollection) throws Exception {
         for (Employee employee : employeeCollection.getEmployees()) {
             if (employee.isEmployeeOfTheMonth()) {
                 throw new Exception("O funcionário " + employee.getName() + " já está marcado como funcionário do mês!");
@@ -120,21 +90,10 @@ public class KeepEmployeePresenter {
                 || view.getCbxBonus().getSelectedIndex() == -1;
     }
 
-    private void checkFieldsIsEmpty() throws Exception {
+    public void checkFieldsIsEmpty() throws Exception {
         if (fieldsIsEmpty()) {
             throw new Exception("TODOS os campos devem ser preenchidos!");
         }
-    }
-
-    public void cleanFields() {
-        view.getTfdName().setText("");
-        view.getTfdSalary().setText("");
-        view.getTfdAbsence().setText("");
-        view.getFfdAdmission().setText("");
-        view.getFfdAge().setText("");
-        view.getCbxOccupation().setSelectedIndex(0);
-        view.getCbxBonus().setSelectedIndex(0);
-        view.getChbEmployeeOfTheMonth().setSelected(false);
     }
 
     private String generateRandomId() {
@@ -153,9 +112,33 @@ public class KeepEmployeePresenter {
 
         return null;
     }
+    
+    private KeepEmployeePresenterState defineState() {
+        if (employee == null) {
+            return new KeepEmployeePresenterIncludeState(this, employeeCollection);
+        }
+        
+        return null;
+    }
 
     public KeepEmployeeView getView() {
         return view;
+    }
+    
+    public KeepEmployeePresenterCommand getCommand() {
+        return command;
+    }
+
+    public void setCommand(KeepEmployeePresenterCommand command) {
+        this.command = command;
+    }
+
+    public KeepEmployeePresenterState getState() {
+        return state;
+    }
+
+    public void setState(KeepEmployeePresenterState state) {
+        this.state = state;
     }
 
 }
