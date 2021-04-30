@@ -58,13 +58,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="ffdAge" max="32767" attributes="0"/>
-                          <Component id="tfdWage" pref="191" max="32767" attributes="0"/>
+                          <Component id="tfdSalary" pref="191" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="ffdAbsence" min="-2" pref="194" max="-2" attributes="0"/>
+                      <Component id="tfdAbsence" min="-2" pref="194" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="chbEmployeeOfTheMonth" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -97,15 +97,15 @@
                   <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="cbxBonus" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfdWage" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfdSalary" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="ffdAbsence" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="chbEmployeeOfTheMonth" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="ffdAdmission" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfdAbsence" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="48" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -184,22 +184,15 @@
         <Property name="text" type="java.lang.String" value="Sal&#xe1;rio"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfdWage">
+    <Component class="javax.swing.JTextField" name="tfdSalary">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="JNumberFormatField nf = (JNumberFormatField) tfdWage;&#xa;nf.setLimit(8);"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="JNumberFormatField nf = (JNumberFormatField) tfdSalary;&#xa;nf.setLimit(8);"/>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JNumberFormatField()"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
         <Property name="text" type="java.lang.String" value="Faltas"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="ffdAbsence">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-          <Format format="###" subtype="-1" type="5"/>
-        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="chbEmployeeOfTheMonth">
@@ -238,6 +231,12 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Excluir"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfdAbsence">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="((AbstractDocument)tfdAbsence.getDocument()).setDocumentFilter(new DocumentFilter(){&#xa;        Pattern regEx = Pattern.compile(&quot;\\d*&quot;);&#xa;&#xa;    @Override&#xa;    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {          &#xa;            Matcher matcher = regEx.matcher(text);&#xa;            if(!matcher.matches()){&#xa;                return;&#xa;            }&#xa;            super.replace(fb, offset, length, text, attrs);&#xa;        }&#xa;    });"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JTextField()"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

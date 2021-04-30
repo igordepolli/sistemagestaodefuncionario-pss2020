@@ -11,6 +11,11 @@ public class BonusCollection {
         listBonus = new ArrayList<>();
     }
     
+    public BonusCollection(Bonus bonus) {
+        listBonus = new ArrayList<>();
+        listBonus.add(bonus);
+    }
+    
     public void addBonus(Bonus bonus) {
         listBonus.add(bonus);
     }

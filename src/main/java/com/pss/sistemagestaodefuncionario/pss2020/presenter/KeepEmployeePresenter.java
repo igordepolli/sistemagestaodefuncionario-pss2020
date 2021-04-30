@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+import javax.swing.JOptionPane;
 
 public class KeepEmployeePresenter {
 
@@ -27,7 +28,6 @@ public class KeepEmployeePresenter {
 
         view = new KeepEmployeeView();
         view.setLocation(20, 20);
-        view.setVisible(true);
 
         initListeners();
     }
@@ -39,35 +39,54 @@ public class KeepEmployeePresenter {
                 view.dispose();
             }
         });
-        
+
         view.getBtnSave().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                // PAREI AQUIIIIIIIIIIIIIIIIIIIIIIIIII
+                try {
+                    checkFieldsIsEmpty();
+                    addEmployee();
+                    JOptionPane.showMessageDialog(view, "Funcionário salvo com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                    cleanFields();
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
 
     private void addEmployee() throws Exception {
-        checkIfEmployeeOfTheMonthIsUnique();
+        if (view.getChbEmployeeOfTheMonth().isSelected()) {
+            checkIfEmployeeOfTheMonthIsUnique();
+        }
+        Employee employee = getTextInFieldsAndCreateEmployee();
+        employeeCollection.addEmployee(employee);
+    }
 
+    private Employee getTextInFieldsAndCreateEmployee() throws Exception {
         String id = generateRandomId();
         String occupation = String.valueOf(view.getCbxOccupation().getSelectedItem());
         String name = view.getTfdName().getText();
         int age = Integer.parseInt(view.getFfdAge().getText());
-        int absences = Integer.parseInt(view.getFfdAbsence().getText());
+        int absences = Integer.parseInt(view.getTfdAbsence().getText());
         boolean employeeOfTheMonth = view.getChbEmployeeOfTheMonth().isSelected();
         LocalDate dateAdmission = DateManipulation.stringToLocalDate(view.getFfdAdmission().getText());
+        BonusCollection bonusCollection = addBonusInCollection();
+        double salary = getAndConvertSalaryField();
 
-        BonusCollection bonusCollection = new BonusCollection();
+        return new Employee(id, name, age, salary, occupation, bonusCollection, absences, dateAdmission, employeeOfTheMonth);
+    }
+
+    private BonusCollection addBonusInCollection() {
         Bonus bonus = getInstanceOfBonus();
-        bonusCollection.addBonus(bonus);
 
-        BigDecimal wageValueBigDecimal = view.getTfdWage().getValue();
-        double wage = wageValueBigDecimal.doubleValue();
+        return new BonusCollection(bonus);
+    }
 
-        Employee employee = new Employee(id, name, age, wage, occupation, bonusCollection, absences, dateAdmission, employeeOfTheMonth);
-        employeeCollection.addEmployee(employee);
+    private double getAndConvertSalaryField() {
+        BigDecimal wageValueBigDecimal = view.getTfdSalary().getValue();
+
+        return wageValueBigDecimal.doubleValue();
     }
 
     private void checkIfEmployeeOfTheMonthIsUnique() throws Exception {
@@ -77,22 +96,28 @@ public class KeepEmployeePresenter {
             }
         }
     }
-    
+
     private boolean fieldsIsEmpty() {
         return view.getFfdAdmission().getText().replaceAll("\\s", "").equals("//")
                 || view.getTfdName().getText().equals("")
-                || view.getTfdWage().getText().equals("")
-                || view.getFfdAbsence().getText().equals("")
+                || view.getTfdSalary().getText().equals("")
+                || view.getTfdAbsence().getText().equals("")
                 || view.getFfdAdmission().getText().equals("")
                 || view.getFfdAge().getText().equals("")
                 || view.getCbxOccupation().getSelectedIndex() == -1
                 || view.getCbxBonus().getSelectedIndex() == -1;
     }
-    
+
+    private void checkFieldsIsEmpty() throws Exception {
+        if (fieldsIsEmpty()) {
+            throw new Exception("TODOS os campos devem ser preenchidos!");
+        }
+    }
+
     private void cleanFields() {
         view.getTfdName().setText("");
-        view.getTfdWage().setText("");
-        view.getFfdAbsence().setText("");
+        view.getTfdSalary().setText("");
+        view.getTfdAbsence().setText("");
         view.getFfdAdmission().setText("");
         view.getFfdAge().setText("");
         view.getCbxOccupation().setSelectedIndex(0);

@@ -10,62 +10,71 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MainScreenPresenter {
-    
+
     private final MainScreenView view;
     private final EmployeeCollection employeeCollection;
     private final ManagerLog managerLog;
-    
+    private KeepEmployeePresenter keepEmployeePresenter;
+    private SearchEmployeePresenter searchEmployeePresenter;
+    private CalculateWagesPresenter calculateWagesPresenter;
+
     public MainScreenPresenter() throws Exception {
         view = new MainScreenView();
         view.setExtendedState(JFrame.MAXIMIZED_BOTH);
         view.setVisible(true);
-        
+
         employeeCollection = EmployeeCollection.getInstance();
         managerLog = new ManagerLog(new JSONLog());
-        
+
+        initPresenters();
+        registerAllObservers();
         initListeners();
     }
-    
-    private void initListeners() {
-        view.getMniKeepEmployee().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    KeepEmployeePresenter keepEmployeePresenter = new KeepEmployeePresenter(employeeCollection, managerLog);
+
+    private void initPresenters() throws Exception {
+        keepEmployeePresenter = new KeepEmployeePresenter(employeeCollection, managerLog);
+        searchEmployeePresenter = new SearchEmployeePresenter(employeeCollection, managerLog);
+        calculateWagesPresenter = new CalculateWagesPresenter(employeeCollection, managerLog);
+    }
+
+    private void initListeners() throws Exception {
+        try {
+            view.getMniKeepEmployee().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     view.add(keepEmployeePresenter.getView());
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    
+                    keepEmployeePresenter.getView().setVisible(true);
                 }
-            }
-        });
-        
-        view.getMniSearchEmployee().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    SearchEmployeePresenter searchEmployeePresenter = new SearchEmployeePresenter(employeeCollection, managerLog);
+            });
+
+            view.getMniSearchEmployee().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
                     view.add(searchEmployeePresenter.getView());
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    searchEmployeePresenter.getView().setVisible(true);
                 }
-            }
-        });
-        
-        view.getMniCalculateWages().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                try {
-                    CalculateWagesPresenter calculateWagesPresenter = new CalculateWagesPresenter(employeeCollection, managerLog);
+            });
+
+            view.getMniCalculateWages().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
                     view.add(calculateWagesPresenter.getView());
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    calculateWagesPresenter.getView().setVisible(true);
                 }
-            }
-        });
+            });
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void registerAllObservers() {
+        employeeCollection.registerObserver(searchEmployeePresenter);
+        employeeCollection.registerObserver(calculateWagesPresenter);
     }
 
     public MainScreenView getView() {
         return view;
     }
-    
+
 }

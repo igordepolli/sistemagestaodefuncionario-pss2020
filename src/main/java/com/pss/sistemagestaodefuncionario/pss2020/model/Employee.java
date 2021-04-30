@@ -8,7 +8,8 @@ public class Employee {
     private String id;
     private String name;
     private int age;
-    private double wage;
+    private double baseSalary;
+    private double salary;
     private String occupation;
     private BonusCollection bonusCollection;
     private int numberOfAbsence;
@@ -18,10 +19,11 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, int age, double wage, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
+    public Employee(String name, int age, double salary, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
         this.name = name;
         this.age = age;
-        this.wage = wage;
+        this.baseSalary = salary;
+        this.salary = salary;
         this.occupation = occupation;
         this.bonusCollection = bonusCollection;
         this.numberOfAbsence = numberOfAbsence;
@@ -29,11 +31,12 @@ public class Employee {
         this.employeeOfTheMonth = employeeOfTheMonth;
     }
 
-    public Employee(String id, String name, int age, double wage, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
+    public Employee(String id, String name, int age, double salary, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
         this.id = id;
         this.name = name;
         this.age = age;
-        this.wage = wage;
+        this.baseSalary = salary;
+        this.salary = salary;
         this.occupation = occupation;
         this.bonusCollection = bonusCollection;
         this.numberOfAbsence = numberOfAbsence;
@@ -47,10 +50,14 @@ public class Employee {
         return period.getYears();
     }
 
-    public double getWage() {
-        return wage;
+    public double getSalary() {
+        return salary;
     }
 
+    public double getBaseSalary() {
+        return baseSalary;
+    }
+    
     public int getNumberOfAbsence() {
         return numberOfAbsence;
     }
@@ -95,8 +102,8 @@ public class Employee {
         this.age = age;
     }
 
-    public void setWage(double wage) {
-        this.wage = wage;
+    public void setSalary(double salary) {
+        this.salary = salary;
     }
 
     public void setOccupation(String occupation) {

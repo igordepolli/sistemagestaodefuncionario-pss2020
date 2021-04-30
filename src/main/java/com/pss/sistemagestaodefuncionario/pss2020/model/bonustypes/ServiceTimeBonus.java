@@ -13,7 +13,7 @@ public class ServiceTimeBonus extends Bonus {
     @Override
     public void calculate(Employee employee) throws Exception {
         double bonusPercentage = getBonusPercentage(employee.getYearsOfService());
-        value = employee.getWage() + (employee.getWage() * bonusPercentage);
+        value = employee.getSalary() + (employee.getSalary() * bonusPercentage);
     }
     
     private double getBonusPercentage(int yearsOfService) {

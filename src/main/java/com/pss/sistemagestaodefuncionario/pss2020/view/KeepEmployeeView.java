@@ -1,11 +1,18 @@
 package com.pss.sistemagestaodefuncionario.pss2020.view;
 
 import com.pss.sistemagestaodefuncionario.pss2020.utils.JNumberFormatField;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.NavigationFilter.FilterBypass;
 
 public class KeepEmployeeView extends javax.swing.JInternalFrame {
 
@@ -34,9 +41,8 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         cbxBonus = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        tfdWage = new JNumberFormatField();
+        tfdSalary = new JNumberFormatField();
         jLabel6 = new javax.swing.JLabel();
-        ffdAbsence = new javax.swing.JFormattedTextField();
         chbEmployeeOfTheMonth = new javax.swing.JCheckBox();
         jLabel7 = new javax.swing.JLabel();
         ffdAdmission = new javax.swing.JFormattedTextField();
@@ -44,6 +50,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         btnSave = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        tfdAbsence = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Manter Funcionário");
@@ -71,12 +78,6 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         jLabel5.setText("Salário");
 
         jLabel6.setText("Faltas");
-
-        try {
-            ffdAbsence.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
 
         chbEmployeeOfTheMonth.setText("Funcionário do Mês");
 
@@ -130,11 +131,11 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(ffdAge)
-                            .addComponent(tfdWage, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)))
+                            .addComponent(tfdSalary, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ffdAbsence, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(tfdAbsence, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(chbEmployeeOfTheMonth)
                         .addGap(18, 18, 18)
@@ -161,14 +162,14 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
                     .addComponent(jLabel4)
                     .addComponent(cbxBonus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(tfdWage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfdSalary, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(ffdAbsence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chbEmployeeOfTheMonth)
                     .addComponent(jLabel7)
-                    .addComponent(ffdAdmission, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ffdAdmission, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfdAbsence, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClose)
@@ -178,8 +179,20 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
                 .addGap(16, 16, 16))
         );
 
-        JNumberFormatField nf = (JNumberFormatField) tfdWage;
+        JNumberFormatField nf = (JNumberFormatField) tfdSalary;
         nf.setLimit(8);
+        ((AbstractDocument)tfdAbsence.getDocument()).setDocumentFilter(new DocumentFilter(){
+            Pattern regEx = Pattern.compile("\\d*");
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+                Matcher matcher = regEx.matcher(text);
+                if(!matcher.matches()){
+                    return;
+                }
+                super.replace(fb, offset, length, text, attrs);
+            }
+        });
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -192,7 +205,6 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> cbxBonus;
     private javax.swing.JComboBox<String> cbxOccupation;
     private javax.swing.JCheckBox chbEmployeeOfTheMonth;
-    private javax.swing.JFormattedTextField ffdAbsence;
     private javax.swing.JFormattedTextField ffdAdmission;
     private javax.swing.JFormattedTextField ffdAge;
     private javax.swing.JLabel jLabel1;
@@ -202,8 +214,9 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JTextField tfdAbsence;
     private javax.swing.JTextField tfdName;
-    private javax.swing.JTextField tfdWage;
+    private javax.swing.JTextField tfdSalary;
     // End of variables declaration//GEN-END:variables
 
     public JButton getBtnClose() {
@@ -234,8 +247,8 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         return chbEmployeeOfTheMonth;
     }
 
-    public JFormattedTextField getFfdAbsence() {
-        return ffdAbsence;
+    public JTextField getTfdAbsence() {
+        return tfdAbsence;
     }
 
     public JFormattedTextField getFfdAdmission() {
@@ -250,7 +263,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         return tfdName;
     }
 
-    public JNumberFormatField getTfdWage() {
-        return (JNumberFormatField) tfdWage;
+    public JNumberFormatField getTfdSalary() {
+        return (JNumberFormatField) tfdSalary;
     }
 }
