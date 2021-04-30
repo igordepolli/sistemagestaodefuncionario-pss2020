@@ -10,26 +10,17 @@ public abstract class KeepEmployeePresenterState {
 
     public KeepEmployeePresenterState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) {
         this.presenter = presenter;
+        this.employeeCollection = employeeCollection;
         presenter.clearListeners();
     }
     
     public void save() {
     }
     
-    public void edit() {
+    public void update() {
     }
     
-    public void remove() {
+    public void delete() {
     }
     
-    protected void cleanFields() {
-        presenter.getView().getCbxOccupation().setSelectedIndex(-1);
-        presenter.getView().getTfdName().setText("");
-        presenter.getView().getFfdAge().setText("");
-        presenter.getView().getCbxBonus().setSelectedIndex(-1);
-        presenter.getView().getTfdSalary().setText("");
-        presenter.getView().getTfdAbsence().setText("");
-        presenter.getView().getChbEmployeeOfTheMonth().setSelected(false);
-        presenter.getView().getFfdAdmission().setText("");
-    }
 }

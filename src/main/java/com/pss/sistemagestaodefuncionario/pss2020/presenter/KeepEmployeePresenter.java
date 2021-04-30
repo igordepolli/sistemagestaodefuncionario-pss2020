@@ -9,6 +9,7 @@ import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.NormalBonus;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.command.KeepEmployeePresenterCommand;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterState;
+import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterViewState;
 import com.pss.sistemagestaodefuncionario.pss2020.utils.DateManipulation;
 import com.pss.sistemagestaodefuncionario.pss2020.view.KeepEmployeeView;
 import java.awt.Component;
@@ -20,43 +21,28 @@ import javax.swing.JButton;
 
 public class KeepEmployeePresenter {
 
+    private static final KeepEmployeePresenter instance = null;
     private final KeepEmployeeView view;
     private KeepEmployeePresenterCommand command;
     private KeepEmployeePresenterState state;
     private Employee employee;
     private EmployeeCollection employeeCollection;
 
-    public KeepEmployeePresenter(Employee employee, EmployeeCollection employeeCollection) throws Exception {
-        this.employee = employee;
+    private KeepEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
+        this.employee = null;
         this.employeeCollection = employeeCollection;
         view = new KeepEmployeeView();
         view.setLocation(20, 20);
-        
-        state = defineState();
+
+        defineState();
     }
-    
-    public void clearListeners() {
-        for (Component component : getView().getParent().getComponents()) {
-            if (component instanceof JButton) {
-                for (ActionListener actionListener : ((JButton) component).getActionListeners()) {
-                    ((JButton) component).removeActionListener(actionListener);
-                }
-            }
+
+    public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
+        if (instance == null) {
+            return new KeepEmployeePresenter(employeeCollection);
         }
-    }
 
-    public Employee getTextInFieldsAndCreateEmployee() throws Exception {
-        String id = generateRandomId();
-        String occupation = String.valueOf(view.getCbxOccupation().getSelectedItem());
-        String name = view.getTfdName().getText();
-        int age = Integer.parseInt(view.getFfdAge().getText());
-        int absences = Integer.parseInt(view.getTfdAbsence().getText());
-        boolean employeeOfTheMonth = view.getChbEmployeeOfTheMonth().isSelected();
-        LocalDate dateAdmission = DateManipulation.stringToLocalDate(view.getFfdAdmission().getText());
-        BonusCollection bonusCollection = addFirstBonusInCollection();
-        double salary = getAndConvertSalaryField();
-
-        return new Employee(id, name, age, salary, occupation, bonusCollection, absences, dateAdmission, employeeOfTheMonth);
+        return instance;
     }
 
     private BonusCollection addFirstBonusInCollection() {
@@ -65,10 +51,39 @@ public class KeepEmployeePresenter {
         return new BonusCollection(bonus);
     }
 
-    private double getAndConvertSalaryField() {
-        BigDecimal wageValueBigDecimal = view.getTfdSalary().getValue();
+    public void defineState() {
+        if (employee == null) {
+            state = new KeepEmployeePresenterIncludeState(this, employeeCollection);
+        } else {
+            state = new KeepEmployeePresenterViewState(this, employeeCollection);
+        }
+    }
 
-        return wageValueBigDecimal.doubleValue();
+    public void clearListeners() {
+        for (Component component : getView().getComponents()) {
+            if (component instanceof JButton) {
+                for (ActionListener actionListener : ((JButton) component).getActionListeners()) {
+                    ((JButton) component).removeActionListener(actionListener);
+                }
+            }
+        }
+    }
+
+    public void cleanFields() {
+        getView().getCbxOccupation().setSelectedIndex(-1);
+        getView().getTfdName().setText("");
+        getView().getFfdAge().setText("");
+        getView().getCbxBonus().setSelectedIndex(-1);
+        getView().getTfdSalary().setText("");
+        getView().getTfdAbsence().setText("");
+        getView().getChbEmployeeOfTheMonth().setSelected(false);
+        getView().getFfdAdmission().setText("");
+    }
+
+    public void checkFieldsIsEmpty() throws Exception {
+        if (fieldsIsEmpty()) {
+            throw new Exception("TODOS os campos devem ser preenchidos!");
+        }
     }
 
     public void checkIfEmployeeOfTheMonthIsUnique(EmployeeCollection employeeCollection) throws Exception {
@@ -77,6 +92,16 @@ public class KeepEmployeePresenter {
                 throw new Exception("O funcionário " + employee.getName() + " já está marcado como funcionário do mês!");
             }
         }
+    }
+
+    public void createNewEmployee() throws Exception {
+        if (employee != null) {
+            throw new Exception("Não é possível criar um novo usuário!");
+        }
+
+        employee = new Employee();
+        employee.setId(generateRandomId());
+        getTextInFieldsAndSetEmployee();
     }
 
     private boolean fieldsIsEmpty() {
@@ -90,14 +115,14 @@ public class KeepEmployeePresenter {
                 || view.getCbxBonus().getSelectedIndex() == -1;
     }
 
-    public void checkFieldsIsEmpty() throws Exception {
-        if (fieldsIsEmpty()) {
-            throw new Exception("TODOS os campos devem ser preenchidos!");
-        }
-    }
-
     private String generateRandomId() {
         return UUID.randomUUID().toString();
+    }
+
+    private double getAndConvertSalaryField() {
+        BigDecimal wageValueBigDecimal = view.getTfdSalary().getValue();
+
+        return wageValueBigDecimal.doubleValue();
     }
 
     private Bonus getInstanceOfBonus() {
@@ -112,19 +137,45 @@ public class KeepEmployeePresenter {
 
         return null;
     }
-    
-    private KeepEmployeePresenterState defineState() {
-        if (employee == null) {
-            return new KeepEmployeePresenterIncludeState(this, employeeCollection);
-        }
-        
-        return null;
+
+    public void getTextInFieldsAndSetEmployee() throws Exception {
+
+        employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
+        employee.setName(view.getTfdName().getText());
+        employee.setAge(Integer.parseInt(view.getFfdAge().getText()));
+        employee.setBonusCollection(addFirstBonusInCollection());
+        employee.setSalary(getAndConvertSalaryField());
+        employee.setNumberOfAbsence(Integer.parseInt(view.getTfdAbsence().getText()));
+        employee.setEmployeeOfTheMonth(view.getChbEmployeeOfTheMonth().isSelected());
+        employee.setAdmissionDate(DateManipulation.stringToLocalDate(view.getFfdAdmission().getText()));
+
+    }
+
+    public void loadFields() throws Exception {
+
+        view.getCbxOccupation().setSelectedItem(employee.getOccupation());
+        view.getTfdName().setText(employee.getName());
+        view.getFfdAge().setText(String.valueOf(employee.getAge()));
+        view.getCbxBonus().setSelectedItem(employee.getBonusCollection().getListBonus().get(0));
+        view.getTfdSalary().setValue(new BigDecimal(employee.getSalary()));
+        view.getTfdAbsence().setText(String.valueOf(employee.getNumberOfAbsence()));
+        view.getChbEmployeeOfTheMonth().setSelected(employee.isEmployeeOfTheMonth());
+        view.getFfdAdmission().setText(DateManipulation.localDateToString(employee.getAdmissionDate()));
+
     }
 
     public KeepEmployeeView getView() {
         return view;
     }
-    
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     public KeepEmployeePresenterCommand getCommand() {
         return command;
     }

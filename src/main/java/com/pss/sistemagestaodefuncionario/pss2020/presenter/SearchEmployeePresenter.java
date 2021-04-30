@@ -2,38 +2,59 @@ package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 
 import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
-import com.pss.sistemagestaodefuncionario.pss2020.model.logs.ManagerLog;
 import com.pss.sistemagestaodefuncionario.pss2020.model.observer.IObserver;
 import com.pss.sistemagestaodefuncionario.pss2020.view.SearchEmployeeView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 public class SearchEmployeePresenter implements IObserver {
 
+    private static final SearchEmployeePresenter instance = null;
     private final SearchEmployeeView view;
     private final EmployeeCollection employeeCollection;
-    private final ManagerLog managerLog;
     private DefaultTableModel tabelEmployees;
 
-    public SearchEmployeePresenter(EmployeeCollection employeeCollection, ManagerLog managerLog) throws Exception {
+    private SearchEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
         this.employeeCollection = employeeCollection;
-        this.managerLog = managerLog;
-
+        
         view = new SearchEmployeeView();
         view.setLocation(20, 350);
         
         constructTableModel();
         initListeners();
     }
-    
+
+    public static SearchEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
+        if (instance == null) {
+            return new SearchEmployeePresenter(employeeCollection);
+        }
+        return instance;
+    }
+     
     private void initListeners() {
         view.getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                view.dispose();
+                view.setVisible(false);
+            }
+        });
+        
+        view.getBtnViewEmployee().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    Employee emp = getEmployeeSelected();
+                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                    keepEmployeePresenter.setEmployee(emp);
+                    keepEmployeePresenter.defineState();
+                    keepEmployeePresenter.getView().setVisible(true);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -55,6 +76,18 @@ public class SearchEmployeePresenter implements IObserver {
                 tabelEmployees.removeRow(i);
             }
         }
+    }
+    
+    private Employee getEmployeeSelected() throws Exception {
+        Employee employee = employeeCollection.searchEmployeeById(getIdOfEmployeeSelected());
+        
+        return employee;
+    }
+    
+    private String getIdOfEmployeeSelected() {
+        int rowIndex = view.getTblEmployees().getSelectedRow();
+        
+        return (String) view.getTblEmployees().getValueAt(rowIndex, 0);
     }
 
     @Override

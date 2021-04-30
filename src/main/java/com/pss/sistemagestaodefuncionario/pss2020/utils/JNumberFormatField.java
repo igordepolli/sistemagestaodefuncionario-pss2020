@@ -22,7 +22,7 @@ public class JNumberFormatField extends JTextField {
 
     private static final long serialVersionUID = -7506506392528621022L;
     private static final NumberFormat MONETARY_FORMAT = new DecimalFormat("R$ #,##0.00");
-    private NumberFormat numberFormat;
+    private static NumberFormat numberFormat;
     private int limit = -1;
 
     public JNumberFormatField(int casasDecimais) {

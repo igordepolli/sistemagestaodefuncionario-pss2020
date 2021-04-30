@@ -2,20 +2,20 @@ package com.pss.sistemagestaodefuncionario.pss2020.presenter.state;
 
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.KeepEmployeePresenter;
-import com.pss.sistemagestaodefuncionario.pss2020.presenter.command.KeepEmployeePresenterIncludeCommand;
+import com.pss.sistemagestaodefuncionario.pss2020.presenter.command.KeepEmployeePresenterEditCommand;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
-public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterState {
+public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
 
-    public KeepEmployeePresenterIncludeState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) {
+    public KeepEmployeePresenterEditState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) {
         super(presenter, employeeCollection);
         
         setView();
         initListeners();
     }
-    
+
     private void initListeners() {
         presenter.getView().getBtnSave().addActionListener(new ActionListener() {
             @Override
@@ -23,23 +23,16 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
                 save();
             }
         });
-        
-        presenter.getView().getBtnClose().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                presenter.getView().setVisible(false);
-            }
-        });
     }
-    
+        
     @Override
     public void save() {
         try {
             presenter.checkFieldsIsEmpty();
-            presenter.createNewEmployee();
-            presenter.setCommand(new KeepEmployeePresenterIncludeCommand(presenter.getEmployee(), employeeCollection));
+            presenter.getTextInFieldsAndSetEmployee();
+            presenter.setCommand(new KeepEmployeePresenterEditCommand(presenter.getEmployee(), employeeCollection));
             presenter.getCommand().execute();
-            JOptionPane.showMessageDialog(presenter.getView(), "Funcionário inserido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(presenter.getView(), "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -55,16 +48,16 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
         presenter.getView().getCbxOccupation().setEnabled(true);
         presenter.getView().getTfdName().setEditable(true);
         presenter.getView().getFfdAge().setEditable(true);
-        presenter.getView().getCbxBonus().setEnabled(true);
+        presenter.getView().getCbxBonus().setEnabled(false);
         presenter.getView().getTfdSalary().setEditable(true);
         presenter.getView().getTfdAbsence().setEditable(true);
         presenter.getView().getChbEmployeeOfTheMonth().setEnabled(true);
-        presenter.getView().getFfdAdmission().setEditable(true);
+        presenter.getView().getFfdAdmission().setEditable(false);
     }
     
     private void setButtons() {
-        presenter.getView().getBtnSave().setVisible(true);
-        presenter.getView().getBtnEdit().setVisible(false);
-        presenter.getView().getBtnDelete().setVisible(false);
+        presenter.getView().getBtnSave().setEnabled(true);
+        presenter.getView().getBtnEdit().setEnabled(false);
+        presenter.getView().getBtnDelete().setEnabled(false);
     }
 }

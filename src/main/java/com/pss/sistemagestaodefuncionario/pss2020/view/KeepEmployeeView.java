@@ -266,4 +266,6 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
     public JNumberFormatField getTfdSalary() {
         return (JNumberFormatField) tfdSalary;
     }
+    
+    
 }

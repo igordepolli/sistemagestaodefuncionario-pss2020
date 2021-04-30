@@ -11,30 +11,36 @@ import javax.swing.JOptionPane;
 
 public class MainScreenPresenter {
 
+    private static final MainScreenPresenter instance = null;
     private final MainScreenView view;
     private final EmployeeCollection employeeCollection;
-    private final ManagerLog managerLog;
     private KeepEmployeePresenter keepEmployeePresenter;
     private SearchEmployeePresenter searchEmployeePresenter;
     private CalculateWagesPresenter calculateWagesPresenter;
 
-    public MainScreenPresenter() throws Exception {
+    private MainScreenPresenter() throws Exception {
         view = new MainScreenView();
         view.setExtendedState(JFrame.MAXIMIZED_BOTH);
         view.setVisible(true);
 
         employeeCollection = EmployeeCollection.getInstance();
-        managerLog = new ManagerLog(new JSONLog());
 
         initPresenters();
         registerAllObservers();
         initListeners();
     }
+    
+    public static MainScreenPresenter getInstance() throws Exception {
+        if (instance == null) {
+            return new MainScreenPresenter();
+        }
+        return instance;
+    }
 
     private void initPresenters() throws Exception {
-        keepEmployeePresenter = new KeepEmployeePresenter(null, employeeCollection);
-        searchEmployeePresenter = new SearchEmployeePresenter(employeeCollection, managerLog);
-        calculateWagesPresenter = new CalculateWagesPresenter(employeeCollection, managerLog);
+        keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+        searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection);
+        calculateWagesPresenter = CalculateWagesPresenter.getInstance(employeeCollection);
     }
 
     private void initListeners() throws Exception {

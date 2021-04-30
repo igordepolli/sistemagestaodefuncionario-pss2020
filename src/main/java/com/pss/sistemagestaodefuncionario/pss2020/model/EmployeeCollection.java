@@ -28,6 +28,32 @@ public class EmployeeCollection extends Subject {
         notifyObservers();
     }
     
+    public Employee searchEmployeeById(String id) throws Exception {
+        for (Employee employee : employees) {
+            if (employee.getId().equals(id)) {
+                return employee;
+            }
+        }
+        throw new Exception("Funcionário não encontrado!");
+    }
+    
+    public Employee searchEmployeeByName(String name) throws Exception {
+        for (Employee employee : employees) {
+            if (employee.getName().toLowerCase().equals(name.toLowerCase())) {
+                return employee;
+            }
+        }
+        throw new Exception("Funcionário não encontrado!");
+    }
+    
+    public void updateEmployee(Employee employee) {
+        for (Employee emp : employees) {
+            if (emp.getId().equals(employee.getId())) {
+                emp = employee;
+            }
+        }
+    }
+    
     public void removeEmployee(Employee employee) {
         employees.remove(employee);
         notifyObservers();
