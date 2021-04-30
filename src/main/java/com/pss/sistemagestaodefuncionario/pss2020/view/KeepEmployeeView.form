@@ -135,6 +135,7 @@
             <StringItem index="3" value="Zelador"/>
           </StringArray>
         </Property>
+        <Property name="selectedIndex" type="int" value="-1"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -172,6 +173,7 @@
             <StringItem index="1" value="Generoso"/>
           </StringArray>
         </Property>
+        <Property name="selectedIndex" type="int" value="-1"/>
       </Properties>
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -184,8 +186,8 @@
     </Component>
     <Component class="javax.swing.JTextField" name="tfdWage">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="JTextFieldFormatoMoeda nf = (JTextFieldFormatoMoeda) tfdWage;&#xa;nf.setLimit(8);"/>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JTextFieldFormatoMoeda()"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="JNumberFormatField nf = (JNumberFormatField) tfdWage;&#xa;nf.setLimit(8);"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new JNumberFormatField()"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">

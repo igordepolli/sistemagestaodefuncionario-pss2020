@@ -1,6 +1,6 @@
 package com.pss.sistemagestaodefuncionario.pss2020.view;
 
-import com.pss.sistemagestaodefuncionario.pss2020.utils.JTextFieldFormatoMoeda;
+import com.pss.sistemagestaodefuncionario.pss2020.utils.JNumberFormatField;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -34,7 +34,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         cbxBonus = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        tfdWage = new JTextFieldFormatoMoeda();
+        tfdWage = new JNumberFormatField();
         jLabel6 = new javax.swing.JLabel();
         ffdAbsence = new javax.swing.JFormattedTextField();
         chbEmployeeOfTheMonth = new javax.swing.JCheckBox();
@@ -51,6 +51,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         jLabel1.setText("Cargo");
 
         cbxOccupation.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Diretor", "Gerente", "Vendedor", "Zelador" }));
+        cbxOccupation.setSelectedIndex(-1);
 
         jLabel2.setText("Nome");
 
@@ -65,6 +66,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         jLabel4.setText("Bônus");
 
         cbxBonus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Normal", "Generoso" }));
+        cbxBonus.setSelectedIndex(-1);
 
         jLabel5.setText("Salário");
 
@@ -176,7 +178,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
                 .addGap(16, 16, 16))
         );
 
-        JTextFieldFormatoMoeda nf = (JTextFieldFormatoMoeda) tfdWage;
+        JNumberFormatField nf = (JNumberFormatField) tfdWage;
         nf.setLimit(8);
 
         pack();
@@ -248,7 +250,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
         return tfdName;
     }
 
-    public JTextField getTfdWage() {
-        return tfdWage;
+    public JNumberFormatField getTfdWage() {
+        return (JNumberFormatField) tfdWage;
     }
 }

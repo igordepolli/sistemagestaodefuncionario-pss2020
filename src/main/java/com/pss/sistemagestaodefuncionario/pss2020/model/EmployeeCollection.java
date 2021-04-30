@@ -19,11 +19,11 @@ public class EmployeeCollection {
         return instance;
     }
     
-    public void addBonus(Employee employee) {
+    public void addEmployee(Employee employee) {
         employees.add(employee);
     }
     
-    public void removeBonus(Employee employee) {
+    public void removeEmployee(Employee employee) {
         employees.remove(employee);
     }
     

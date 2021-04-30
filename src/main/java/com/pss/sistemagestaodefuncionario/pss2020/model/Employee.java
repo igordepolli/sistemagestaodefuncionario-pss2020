@@ -5,7 +5,7 @@ import java.time.Period;
 
 public class Employee {
     
-    private Integer id;
+    private String id;
     private String name;
     private int age;
     private double wage;
@@ -16,6 +16,29 @@ public class Employee {
     private boolean employeeOfTheMonth;
 
     public Employee() {
+    }
+
+    public Employee(String name, int age, double wage, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
+        this.name = name;
+        this.age = age;
+        this.wage = wage;
+        this.occupation = occupation;
+        this.bonusCollection = bonusCollection;
+        this.numberOfAbsence = numberOfAbsence;
+        this.admissionDate = admissionDate;
+        this.employeeOfTheMonth = employeeOfTheMonth;
+    }
+
+    public Employee(String id, String name, int age, double wage, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.wage = wage;
+        this.occupation = occupation;
+        this.bonusCollection = bonusCollection;
+        this.numberOfAbsence = numberOfAbsence;
+        this.admissionDate = admissionDate;
+        this.employeeOfTheMonth = employeeOfTheMonth;
     }
     
     public int getYearsOfService() {
@@ -36,7 +59,7 @@ public class Employee {
         return employeeOfTheMonth;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -58,6 +81,42 @@ public class Employee {
 
     public LocalDate getAdmissionDate() {
         return admissionDate;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setWage(double wage) {
+        this.wage = wage;
+    }
+
+    public void setOccupation(String occupation) {
+        this.occupation = occupation;
+    }
+
+    public void setBonusCollection(BonusCollection bonusCollection) {
+        this.bonusCollection = bonusCollection;
+    }
+
+    public void setNumberOfAbsence(int numberOfAbsence) {
+        this.numberOfAbsence = numberOfAbsence;
+    }
+
+    public void setAdmissionDate(LocalDate admissionDate) {
+        this.admissionDate = admissionDate;
+    }
+
+    public void setEmployeeOfTheMonth(boolean employeeOfTheMonth) {
+        this.employeeOfTheMonth = employeeOfTheMonth;
     }
     
 }

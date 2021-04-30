@@ -18,22 +18,22 @@ import javax.swing.text.PlainDocument;
  *
  * @author Dyorgio da Silva Nascimento
  */
-public class JTextFieldFormatoMoeda extends JTextField {
+public class JNumberFormatField extends JTextField {
 
     private static final long serialVersionUID = -7506506392528621022L;
     private static final NumberFormat MONETARY_FORMAT = new DecimalFormat("R$ #,##0.00");
     private NumberFormat numberFormat;
     private int limit = -1;
 
-    public JTextFieldFormatoMoeda(int casasDecimais) {
+    public JNumberFormatField(int casasDecimais) {
         this(new DecimalFormat((casasDecimais == 0 ? "#,##0" : "#,##0.") + makeZeros(casasDecimais)));
     }
 
-    public JTextFieldFormatoMoeda() {
+    public JNumberFormatField() {
         this(MONETARY_FORMAT);
     }
 
-    public JTextFieldFormatoMoeda(NumberFormat format) {// define o formato do
+    public JNumberFormatField(NumberFormat format) {// define o formato do
         // número
         numberFormat = format;// alinhamento horizontal para o texto
         setHorizontalAlignment(RIGHT);// documento responsável pela formatação
@@ -43,7 +43,7 @@ public class JTextFieldFormatoMoeda extends JTextField {
 
             @Override
             public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {
-                String text = new StringBuilder(JTextFieldFormatoMoeda.this.getText().replaceAll("[^0-9]", "")).append(str.replaceAll("[^0-9]", "")).toString();
+                String text = new StringBuilder(JNumberFormatField.this.getText().replaceAll("[^0-9]", "")).append(str.replaceAll("[^0-9]", "")).toString();
                 super.remove(0, getLength());
                 if (text.isEmpty()) {
                     text = "0";

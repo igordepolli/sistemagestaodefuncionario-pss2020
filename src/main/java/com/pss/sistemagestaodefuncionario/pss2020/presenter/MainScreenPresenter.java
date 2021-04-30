@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 
 public class MainScreenPresenter {
     
-    private static MainScreenPresenter instance = null;
     private final MainScreenView view;
     private final EmployeeCollection employeeCollection;
     private final ManagerLog managerLog;
@@ -25,13 +24,6 @@ public class MainScreenPresenter {
         managerLog = new ManagerLog(new JSONLog());
         
         initListeners();
-    }
-    
-    public static MainScreenPresenter getInstance() throws Exception {
-        if (instance == null) {
-            instance = new MainScreenPresenter();
-        }
-        return instance;
     }
     
     private void initListeners() {
