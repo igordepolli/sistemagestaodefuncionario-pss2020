@@ -21,7 +21,7 @@ import javax.swing.JButton;
 
 public class KeepEmployeePresenter {
 
-    private static final KeepEmployeePresenter instance = null;
+    private static KeepEmployeePresenter instance = null;
     private final KeepEmployeeView view;
     private KeepEmployeePresenterCommand command;
     private KeepEmployeePresenterState state;
@@ -39,7 +39,7 @@ public class KeepEmployeePresenter {
 
     public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
         if (instance == null) {
-            return new KeepEmployeePresenter(employeeCollection);
+            instance = new KeepEmployeePresenter(employeeCollection);
         }
 
         return instance;
@@ -51,7 +51,7 @@ public class KeepEmployeePresenter {
         return new BonusCollection(bonus);
     }
 
-    public void defineState() {
+    private void defineState() throws Exception {
         if (employee == null) {
             state = new KeepEmployeePresenterIncludeState(this, employeeCollection);
         } else {
@@ -59,7 +59,7 @@ public class KeepEmployeePresenter {
         }
     }
 
-    public void clearListeners() {
+    public void cleanListeners() {
         for (Component component : getView().getComponents()) {
             if (component instanceof JButton) {
                 for (ActionListener actionListener : ((JButton) component).getActionListeners()) {

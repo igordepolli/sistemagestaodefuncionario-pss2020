@@ -11,7 +11,7 @@ public abstract class KeepEmployeePresenterState {
     public KeepEmployeePresenterState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) {
         this.presenter = presenter;
         this.employeeCollection = employeeCollection;
-        presenter.clearListeners();
+        presenter.cleanListeners();
     }
     
     public void save() {

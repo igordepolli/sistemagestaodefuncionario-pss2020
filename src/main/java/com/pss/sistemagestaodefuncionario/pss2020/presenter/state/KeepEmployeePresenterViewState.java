@@ -7,10 +7,11 @@ import java.awt.event.ActionListener;
 
 public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
 
-    public KeepEmployeePresenterViewState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) {
+    public KeepEmployeePresenterViewState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) throws Exception {
         super(presenter, employeeCollection);
         
         setView();
+        presenter.loadFields();
         initListeners();
     }
     
@@ -18,6 +19,7 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
         presenter.getView().getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
+                presenter.cleanFields();
                 presenter.getView().setVisible(false);
             }
         });

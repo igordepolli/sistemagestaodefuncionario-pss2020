@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CalculateWagesPresenter implements IObserver {
 
-    private static final CalculateWagesPresenter instance = null;
+    private static CalculateWagesPresenter instance = null;
     private final CalculateWagesView view;
     private final EmployeeCollection employeeCollection;
 
@@ -25,7 +25,7 @@ public class CalculateWagesPresenter implements IObserver {
     
     public static CalculateWagesPresenter getInstance(EmployeeCollection employeeCollection) {
         if (instance == null) {
-            return new CalculateWagesPresenter(employeeCollection);
+            instance = new CalculateWagesPresenter(employeeCollection);
         }
         return instance;
     }

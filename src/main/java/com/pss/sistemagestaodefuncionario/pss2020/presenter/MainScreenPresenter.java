@@ -1,8 +1,6 @@
 package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
-import com.pss.sistemagestaodefuncionario.pss2020.model.logs.JSONLog;
-import com.pss.sistemagestaodefuncionario.pss2020.model.logs.ManagerLog;
 import com.pss.sistemagestaodefuncionario.pss2020.view.MainScreenView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +9,7 @@ import javax.swing.JOptionPane;
 
 public class MainScreenPresenter {
 
-    private static final MainScreenPresenter instance = null;
+    private static MainScreenPresenter instance = null;
     private final MainScreenView view;
     private final EmployeeCollection employeeCollection;
     private KeepEmployeePresenter keepEmployeePresenter;
@@ -32,7 +30,7 @@ public class MainScreenPresenter {
     
     public static MainScreenPresenter getInstance() throws Exception {
         if (instance == null) {
-            return new MainScreenPresenter();
+            instance = new MainScreenPresenter();
         }
         return instance;
     }

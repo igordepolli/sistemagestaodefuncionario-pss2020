@@ -39,6 +39,7 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
         jLabel1.setText("Nome");
 
         btnSearch.setText("Buscar");
+        btnSearch.setEnabled(false);
 
         tblEmployees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -71,6 +72,7 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
         btnViewEmployee.setText("Visualizar");
 
         btnViewBonus.setText("Ver bônus");
+        btnViewBonus.setEnabled(false);
 
         btnNewEmployee.setText("Novo");
 
