@@ -2,6 +2,7 @@ package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 
 import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
+import com.pss.sistemagestaodefuncionario.pss2020.model.log.ManagerLog;
 import com.pss.sistemagestaodefuncionario.pss2020.model.observer.IObserver;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterViewState;
@@ -20,10 +21,12 @@ public class SearchEmployeePresenter implements IObserver {
     private final SearchEmployeeView view;
     private final EmployeeCollection employeeCollection;
     private DefaultTableModel tableEmployees;
+    private final ManagerLog log;
 
-    private SearchEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
+    private SearchEmployeePresenter(EmployeeCollection employeeCollection, ManagerLog log) throws Exception {
         this.employeeCollection = employeeCollection;
-
+        this.log = log;
+        
         view = new SearchEmployeeView();
         view.setLocation(20, 350);
 
@@ -32,9 +35,9 @@ public class SearchEmployeePresenter implements IObserver {
         initListeners();
     }
 
-    public static SearchEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
+    public static SearchEmployeePresenter getInstance(EmployeeCollection employeeCollection, ManagerLog log) throws Exception {
         if (instance == null) {
-            instance = new SearchEmployeePresenter(employeeCollection);
+            instance = new SearchEmployeePresenter(employeeCollection, log);
         }
 
         return instance;
@@ -54,7 +57,12 @@ public class SearchEmployeePresenter implements IObserver {
                 try {
                     defineTableBehavior(view.getTfdName().getText());
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    try {
+                        log.write(ex.getMessage());
+                        JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    } catch (Exception ex1) {
+                        JOptionPane.showMessageDialog(view, ex.getMessage(), "Falha ao escrever no log", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -65,8 +73,14 @@ public class SearchEmployeePresenter implements IObserver {
                 try {
                     Employee emp = getEmployeeSelected();
                     new BonusHistoryPresenter(emp);
+                    log.write(emp);
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    try {
+                        log.write(ex.getMessage());
+                        JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    } catch (Exception ex1) {
+                        JOptionPane.showMessageDialog(view, ex.getMessage(), "Falha ao escrever no log", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -76,11 +90,16 @@ public class SearchEmployeePresenter implements IObserver {
             public void actionPerformed(ActionEvent arg0) {
                 try {
                     Employee emp = getEmployeeSelected();
-                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection, log);
                     keepEmployeePresenter.setEmployee(emp);
                     keepEmployeePresenter.setState(new KeepEmployeePresenterViewState(keepEmployeePresenter, employeeCollection));
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    try {
+                        log.write(ex.getMessage());
+                        JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    } catch (Exception ex1) {
+                        JOptionPane.showMessageDialog(view, ex.getMessage(), "Falha ao escrever no log", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });
@@ -89,10 +108,15 @@ public class SearchEmployeePresenter implements IObserver {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
-                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection, log);
                     keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    try {
+                        log.write(ex.getMessage());
+                        JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                    } catch (Exception ex1) {
+                        JOptionPane.showMessageDialog(view, ex.getMessage(), "Falha ao escrever no log", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
         });

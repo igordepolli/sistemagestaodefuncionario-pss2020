@@ -54,10 +54,16 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
                 presenter.setCommand(new KeepEmployeePresenterDeleteCommand(presenter.getEmployee(), employeeCollection));
                 presenter.getCommand().execute();
                 JOptionPane.showMessageDialog(presenter.getView(), "Funcionário deletado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                presenter.getLog().write(presenter.getEmployee(), "Excluído");
                 presenter.setState(new KeepEmployeePresenterIncludeState(presenter, employeeCollection));
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            try {
+                presenter.getLog().write(ex.getMessage());
+                JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex1) {
+                JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Falha ao escrever no log", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
     

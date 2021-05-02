@@ -42,11 +42,17 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
             presenter.setCommand(new KeepEmployeePresenterIncludeCommand(presenter.getEmployee(), employeeCollection));
             presenter.getCommand().execute();
             JOptionPane.showMessageDialog(presenter.getView(), "Funcionário inserido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            presenter.getLog().write(presenter.getEmployee(), "Incluído");
             presenter.setEmployee(null);
             presenter.cleanFields();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
-            presenter.setEmployee(null);
+            try {
+                presenter.getLog().write(ex.getMessage());
+                JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                presenter.setEmployee(null);
+            } catch (Exception ex1) {
+                JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Falha ao escrever no log", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
     

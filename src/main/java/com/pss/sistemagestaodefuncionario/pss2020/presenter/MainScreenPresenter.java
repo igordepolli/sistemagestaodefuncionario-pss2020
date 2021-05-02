@@ -2,6 +2,8 @@ package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 
 import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
+import com.pss.sistemagestaodefuncionario.pss2020.model.log.ManagerLog;
+import com.pss.sistemagestaodefuncionario.pss2020.model.log.TxtLog;
 import com.pss.sistemagestaodefuncionario.pss2020.model.observer.IObserver;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
 import com.pss.sistemagestaodefuncionario.pss2020.view.MainScreenView;
@@ -19,12 +21,13 @@ public class MainScreenPresenter implements IObserver {
     private KeepEmployeePresenter keepEmployeePresenter;
     private SearchEmployeePresenter searchEmployeePresenter;
     private CalculateSalaryPresenter calculateSalaryPresenter;
+    private final ManagerLog log;
 
     private MainScreenPresenter() throws Exception {
         view = new MainScreenView();
         view.setExtendedState(JFrame.MAXIMIZED_BOTH);
         view.setVisible(true);
-
+        log = new ManagerLog(new TxtLog(null));
         employeeCollection = EmployeeCollection.getInstance();
 
         initPresenters();
@@ -41,9 +44,9 @@ public class MainScreenPresenter implements IObserver {
     }
 
     private void initPresenters() throws Exception {
-        keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
-        searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection);
-        calculateSalaryPresenter = CalculateSalaryPresenter.getInstance(employeeCollection);
+        keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection, log);
+        searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection, log);
+        calculateSalaryPresenter = CalculateSalaryPresenter.getInstance(employeeCollection, log);
         
         view.add(keepEmployeePresenter.getView());
         view.add(searchEmployeePresenter.getView());
@@ -73,6 +76,14 @@ public class MainScreenPresenter implements IObserver {
                     calculateSalaryPresenter.getView().setVisible(true);
                 }
             });
+            
+            view.getMniSetupLog().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    new SetupLogPresenter(log);
+                }
+            });
+            
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }

@@ -5,6 +5,7 @@ import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
 import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.GenerousBonus;
 import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.NormalBonus;
+import com.pss.sistemagestaodefuncionario.pss2020.model.log.ManagerLog;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.command.KeepEmployeePresenterCommand;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterState;
 import com.pss.sistemagestaodefuncionario.pss2020.utils.DateManipulation;
@@ -20,19 +21,21 @@ public class KeepEmployeePresenter {
     private KeepEmployeePresenterState state;
     private Employee employee;
     private final EmployeeCollection employeeCollection;
+    private final ManagerLog log;
 
-    private KeepEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
+    private KeepEmployeePresenter(EmployeeCollection employeeCollection, ManagerLog log) throws Exception {
         this.employee = null;
         this.employeeCollection = employeeCollection;
+        this.log = log;
         
         view = new KeepEmployeeView();
         view.setLocation(20, 20);
 
     }
 
-    public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection) throws Exception {
+    public static KeepEmployeePresenter getInstance(EmployeeCollection employeeCollection, ManagerLog log) throws Exception {
         if (instance == null) {
-            instance = new KeepEmployeePresenter(employeeCollection);
+            instance = new KeepEmployeePresenter(employeeCollection, log);
         }
 
         return instance;
@@ -159,6 +162,10 @@ public class KeepEmployeePresenter {
 
     public KeepEmployeeView getView() {
         return view;
+    }
+
+    public ManagerLog getLog() {
+        return log;
     }
 
     public Employee getEmployee() {

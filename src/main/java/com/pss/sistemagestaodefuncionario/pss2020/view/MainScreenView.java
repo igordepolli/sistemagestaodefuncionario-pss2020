@@ -24,10 +24,10 @@ public class MainScreenView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnXml = new javax.swing.JButton();
-        btnJson = new javax.swing.JButton();
-        btnTxt = new javax.swing.JButton();
         lblAmountEmployees = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mniKeepEmployee = new javax.swing.JMenuItem();
@@ -35,6 +35,7 @@ public class MainScreenView extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         mniCalculateWages = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        mniSetupLog = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gestão de Pessoas");
@@ -45,20 +46,17 @@ public class MainScreenView extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("1.0");
 
-        btnXml.setBackground(new java.awt.Color(255, 255, 255));
-        btnXml.setText("XML");
-        btnXml.setFocusPainted(false);
-
-        btnJson.setBackground(new java.awt.Color(255, 255, 255));
-        btnJson.setText("JSON");
-        btnJson.setFocusPainted(false);
-
-        btnTxt.setBackground(new java.awt.Color(255, 255, 255));
-        btnTxt.setText("TXT");
-        btnTxt.setFocusPainted(false);
-
         lblAmountEmployees.setForeground(new java.awt.Color(0, 0, 0));
         lblAmountEmployees.setText("0");
+
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("XML");
+
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("JSON");
+
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("TXT");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -67,26 +65,26 @@ public class MainScreenView extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 296, Short.MAX_VALUE)
-                .addComponent(btnXml)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnJson)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTxt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 296, Short.MAX_VALUE)
+                .addGap(306, 306, 306)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 352, Short.MAX_VALUE)
                 .addComponent(lblAmountEmployees)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(btnXml)
-                    .addComponent(btnJson)
-                    .addComponent(btnTxt)
-                    .addComponent(lblAmountEmployees))
+                    .addComponent(lblAmountEmployees)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
                 .addContainerGap())
         );
 
@@ -108,6 +106,10 @@ public class MainScreenView extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Ferramentas");
+
+        mniSetupLog.setText("Configurar log");
+        jMenu3.add(mniSetupLog);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -121,7 +123,7 @@ public class MainScreenView extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 590, Short.MAX_VALUE)
+                .addGap(0, 598, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -129,10 +131,10 @@ public class MainScreenView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnJson;
-    private javax.swing.JButton btnTxt;
-    private javax.swing.JButton btnXml;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -142,19 +144,8 @@ public class MainScreenView extends javax.swing.JFrame {
     private javax.swing.JMenuItem mniCalculateWages;
     private javax.swing.JMenuItem mniKeepEmployee;
     private javax.swing.JMenuItem mniSearchEmployee;
+    private javax.swing.JMenuItem mniSetupLog;
     // End of variables declaration//GEN-END:variables
-
-    public JButton getBtnJson() {
-        return btnJson;
-    }
-
-    public JButton getBtnTxt() {
-        return btnTxt;
-    }
-
-    public JButton getBtnXml() {
-        return btnXml;
-    }
 
     public JLabel getLblAmountEmployees() {
         return lblAmountEmployees;
@@ -172,4 +163,8 @@ public class MainScreenView extends javax.swing.JFrame {
         return mniSearchEmployee;
     }
 
+    public JMenuItem getMniSetupLog() {
+        return mniSetupLog;
+    }
+    
 }

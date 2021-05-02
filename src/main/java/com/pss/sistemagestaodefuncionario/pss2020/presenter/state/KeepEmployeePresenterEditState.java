@@ -11,10 +11,10 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
 
     public KeepEmployeePresenterEditState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) {
         super(presenter, employeeCollection);
-        
+
         setView();
         initListeners();
-        
+
         presenter.getView().setVisible(true);
     }
 
@@ -25,7 +25,7 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
                 save();
             }
         });
-        
+
         presenter.getView().getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -33,7 +33,7 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
             }
         });
     }
-        
+
     @Override
     public void save() {
         try {
@@ -41,17 +41,23 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
             presenter.setCommand(new KeepEmployeePresenterEditCommand(presenter.getEmployee(), employeeCollection));
             presenter.getCommand().execute();
             JOptionPane.showMessageDialog(presenter.getView(), "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            presenter.getLog().write(presenter.getEmployee(), "Atualizado");
             presenter.setState(new KeepEmployeePresenterViewState(presenter, employeeCollection));
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            try {
+                presenter.getLog().write(ex.getMessage());
+                JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex1) {
+                JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Falha ao escrever no log", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
-    
+
     private void setView() {
         setFields();
         setButtons();
     }
-    
+
     private void setFields() {
         presenter.getView().getCbxOccupation().setEnabled(true);
         presenter.getView().getTfdName().setEditable(true);
@@ -62,7 +68,7 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
         presenter.getView().getChbEmployeeOfTheMonth().setEnabled(true);
         presenter.getView().getFfdAdmission().setEditable(false);
     }
-    
+
     private void setButtons() {
         presenter.getView().getBtnSave().setEnabled(true);
         presenter.getView().getBtnEdit().setEnabled(false);
