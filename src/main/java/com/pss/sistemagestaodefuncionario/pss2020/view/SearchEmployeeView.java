@@ -39,7 +39,6 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
         jLabel1.setText("Nome");
 
         btnSearch.setText("Buscar");
-        btnSearch.setEnabled(false);
 
         tblEmployees.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

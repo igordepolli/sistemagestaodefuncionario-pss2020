@@ -15,6 +15,7 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
         setView();
         initListeners();
         
+        presenter.setEmployee(null);
         presenter.getView().setVisible(true);
     }
     

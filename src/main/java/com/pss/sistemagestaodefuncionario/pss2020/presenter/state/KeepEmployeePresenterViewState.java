@@ -38,7 +38,6 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 delete();
-                presenter.setState(new KeepEmployeePresenterIncludeState(presenter, employeeCollection));
             }
         });
     }
@@ -54,6 +53,8 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
             if (confirmDeleteEmployee()) {
                 presenter.setCommand(new KeepEmployeePresenterDeleteCommand(presenter.getEmployee(), employeeCollection));
                 presenter.getCommand().execute();
+                JOptionPane.showMessageDialog(presenter.getView(), "Funcionário deletado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                presenter.setState(new KeepEmployeePresenterIncludeState(presenter, employeeCollection));
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -61,7 +62,7 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
     }
     
     private boolean confirmDeleteEmployee() throws Exception {
-        int result = JOptionPane.showConfirmDialog(null, "Deseja mesmo remover o funcionário " + presenter.getEmployee().getName() + "?");
+        int result = JOptionPane.showConfirmDialog(presenter.getView(), "Deseja mesmo remover o funcionário " + presenter.getEmployee().getName() + "?");
         
         return result == JOptionPane.YES_OPTION;
     }

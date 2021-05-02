@@ -3,6 +3,7 @@ package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
 import com.pss.sistemagestaodefuncionario.pss2020.model.observer.IObserver;
+import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterViewState;
 import com.pss.sistemagestaodefuncionario.pss2020.view.SearchEmployeeView;
 import java.awt.event.ActionEvent;
@@ -18,7 +19,7 @@ public class SearchEmployeePresenter implements IObserver {
     private static SearchEmployeePresenter instance = null;
     private final SearchEmployeeView view;
     private final EmployeeCollection employeeCollection;
-    private DefaultTableModel tabelEmployees;
+    private DefaultTableModel tableEmployees;
 
     private SearchEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
         this.employeeCollection = employeeCollection;
@@ -47,6 +48,17 @@ public class SearchEmployeePresenter implements IObserver {
             }
         });
         
+        view.getBtnSearch().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    defineTableBehavior(view.getTfdName().getText());
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
         view.getBtnViewBonus().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -73,6 +85,18 @@ public class SearchEmployeePresenter implements IObserver {
             }
         });
 
+        view.getBtnNewEmployee().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
+                    keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
         view.getTblEmployees().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -84,20 +108,20 @@ public class SearchEmployeePresenter implements IObserver {
     }
 
     private void constructTableModel() {
-        tabelEmployees = new DefaultTableModel(
+        tableEmployees = new DefaultTableModel(
                 new Object[][][][]{},
                 new String[]{"ID", "Nome", "Idade", "Função", "Salário base (R$)"}
         );
 
         view.getTblEmployees().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tabelEmployees.setNumRows(0);
-        view.getTblEmployees().setModel(tabelEmployees);
+        tableEmployees.setNumRows(0);
+        view.getTblEmployees().setModel(tableEmployees);
     }
 
     private void clearTable() {
-        if (tabelEmployees.getRowCount() > 0) {
-            for (int i = tabelEmployees.getRowCount() - 1; i > -1; i--) {
-                tabelEmployees.removeRow(i);
+        if (tableEmployees.getRowCount() > 0) {
+            for (int i = tableEmployees.getRowCount() - 1; i > -1; i--) {
+                tableEmployees.removeRow(i);
             }
         }
     }
@@ -127,10 +151,34 @@ public class SearchEmployeePresenter implements IObserver {
             view.getBtnViewEmployee().setEnabled(false);
         }
     }
+    
+    private void defineTableBehavior(String textInNameTextField) throws Exception {
+        if (textInNameTextField.equals("")) {
+            loadEmployees();
+        } else {
+            searchEmployee(textInNameTextField);
+        }
+    }
+
+    private void searchEmployee(String name) throws Exception {
+        Employee emp = employeeCollection.searchEmployeeByName(name);
+
+        clearTable();
+        tableEmployees.addRow(new Object[]{
+            emp.getId(),
+            emp.getName(),
+            emp.getAge(),
+            emp.getOccupation(),
+            emp.getBaseSalary()
+        });
+
+    }
 
     private void loadEmployees() {
+        clearTable();
+        
         for (Employee employee : employeeCollection.getEmployees()) {
-            tabelEmployees.addRow(new Object[]{
+            tableEmployees.addRow(new Object[]{
                 employee.getId(),
                 employee.getName(),
                 employee.getAge(),
@@ -145,7 +193,7 @@ public class SearchEmployeePresenter implements IObserver {
         clearTable();
 
         for (Employee employee : employees) {
-            tabelEmployees.addRow(new Object[]{
+            tableEmployees.addRow(new Object[]{
                 employee.getId(),
                 employee.getName(),
                 employee.getAge(),

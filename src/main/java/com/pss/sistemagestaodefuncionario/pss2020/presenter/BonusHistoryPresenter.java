@@ -10,7 +10,7 @@ public class BonusHistoryPresenter {
     
     private final BonusHistoryView view;
     private final Employee employee;
-    private DefaultTableModel tabelBonus;
+    private DefaultTableModel tableBonus;
 
     public BonusHistoryPresenter(Employee employee) {
         this.employee = employee;
@@ -27,19 +27,19 @@ public class BonusHistoryPresenter {
     }
     
     private void constructTableModel() {
-        tabelBonus = new DefaultTableModel(
+        tableBonus = new DefaultTableModel(
                 new Object[][][][]{},
                 new String[]{"Tipo de bônus", "Valor do bônus", "Data do recebimento"}
         );
 
         view.getTblBonus().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tabelBonus.setNumRows(0);
-        view.getTblBonus().setModel(tabelBonus);
+        tableBonus.setNumRows(0);
+        view.getTblBonus().setModel(tableBonus);
     }
     
     private void loadBonus() {
         for (Bonus bonus : employee.getBonusCollection().getListBonus()) {
-            tabelBonus.addRow(new Object[]{
+            tableBonus.addRow(new Object[]{
                 bonus.getDescription(),
                 bonus.getValue(),
                 bonus.getDate()
