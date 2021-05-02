@@ -2,7 +2,9 @@ package com.pss.sistemagestaodefuncionario.pss2020.utils;
 
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class DateManipulation {
 
@@ -16,6 +18,10 @@ public class DateManipulation {
     public static String localDateToString(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
+    }
+    
+    public static LocalDate dateToLocalDate(Date dateToConvert) {
+        return LocalDate.ofInstant(dateToConvert.toInstant(), ZoneId.systemDefault());
     }
 
 }

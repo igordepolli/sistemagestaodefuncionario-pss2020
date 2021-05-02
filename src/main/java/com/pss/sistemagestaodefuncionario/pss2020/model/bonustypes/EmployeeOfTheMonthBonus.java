@@ -6,15 +6,14 @@ import java.time.LocalDate;
 
 public class EmployeeOfTheMonthBonus extends Bonus {
 
-    public EmployeeOfTheMonthBonus(String description, LocalDate date) {
-        super(description, date);
+    public EmployeeOfTheMonthBonus(String description) {
+        super(description);
     }
 
     @Override
-    public void calculate(Employee employee) throws Exception {
-        if (employee.isEmployeeOfTheMonth()) {
-            value = 500.00;
-        }
+    public void calculate(Employee employee, LocalDate localDate) throws Exception {
+        date = localDate;
+        if (employee.isEmployeeOfTheMonth()) { value = 500.00; }
     }
     
 }

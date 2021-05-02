@@ -6,14 +6,15 @@ import java.time.LocalDate;
 
 public class ServiceTimeBonus extends Bonus {
 
-    public ServiceTimeBonus(String description, LocalDate date) {
-        super(description, date);
+    public ServiceTimeBonus(String description) {
+        super(description);
     }
 
     @Override
-    public void calculate(Employee employee) throws Exception {
+    public void calculate(Employee employee, LocalDate localDate) throws Exception {
+        date = localDate;
         double bonusPercentage = getBonusPercentage(employee.getYearsOfService());
-        value = employee.getSalary() + (employee.getSalary() * bonusPercentage);
+        value = employee.getBaseSalary() * bonusPercentage;
     }
     
     private double getBonusPercentage(int yearsOfService) {

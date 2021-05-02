@@ -6,22 +6,23 @@ import java.time.LocalDate;
 
 public class OccupationBonus extends Bonus {
 
-    public OccupationBonus(String description, LocalDate date) {
-        super(description, date);
+    public OccupationBonus(String description) {
+        super(description);
     }
 
     @Override
-    public void calculate(Employee employee) throws Exception {
+    public void calculate(Employee employee, LocalDate localDate) throws Exception {
+        date = localDate;
         value = getBonus(employee.getOccupation());
     }
     
-    private double getBonus(String occupation) {
+    private double getBonus(String occupation) throws Exception {
         if (occupation.equals("Diretor")) { return 150; }
         if (occupation.equals("Gerente")) { return 100; }
         if (occupation.equals("Vendedor")) { return 50; }
         if (occupation.equals("Zelador")) { return 20; }
         
-        return 0;
+        throw new Exception("Não há cargo definido!");
     }
     
 }

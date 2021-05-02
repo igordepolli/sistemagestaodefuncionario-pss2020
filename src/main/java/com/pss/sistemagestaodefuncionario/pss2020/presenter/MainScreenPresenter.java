@@ -1,14 +1,17 @@
 package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 
+import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
+import com.pss.sistemagestaodefuncionario.pss2020.model.observer.IObserver;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
 import com.pss.sistemagestaodefuncionario.pss2020.view.MainScreenView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class MainScreenPresenter {
+public class MainScreenPresenter implements IObserver {
 
     private static MainScreenPresenter instance = null;
     private final MainScreenView view;
@@ -27,6 +30,7 @@ public class MainScreenPresenter {
         initPresenters();
         registerAllObservers();
         initListeners();
+        setNumberOfEmployees();
     }
     
     public static MainScreenPresenter getInstance() throws Exception {
@@ -73,14 +77,23 @@ public class MainScreenPresenter {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    private void setNumberOfEmployees() {
+        view.getLblAmountEmployees().setText(String.valueOf(employeeCollection.getEmployees().size()));
+    }
 
     private void registerAllObservers() {
         employeeCollection.registerObserver(searchEmployeePresenter);
-        employeeCollection.registerObserver(calculateSalaryPresenter);
+        employeeCollection.registerObserver(this);
     }
 
     public MainScreenView getView() {
         return view;
+    }
+
+    @Override
+    public void update(List<Employee> employees) {
+        view.getLblAmountEmployees().setText(String.valueOf(employees.size()));
     }
 
 }

@@ -8,12 +8,11 @@ public abstract class Bonus {
     protected double value;
     protected LocalDate date;
 
-    public Bonus(String description, LocalDate date) {
+    public Bonus(String description) {
         this.description = description;
-        this.date = date;
     }
     
-    public abstract void calculate(Employee employee) throws Exception;
+    public abstract void calculate(Employee employee, LocalDate date) throws Exception;
 
     public String getDescription() {
         return description;

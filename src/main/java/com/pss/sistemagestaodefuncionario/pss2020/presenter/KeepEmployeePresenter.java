@@ -10,7 +10,6 @@ import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePr
 import com.pss.sistemagestaodefuncionario.pss2020.utils.DateManipulation;
 import com.pss.sistemagestaodefuncionario.pss2020.view.KeepEmployeeView;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.UUID;
 
 public class KeepEmployeePresenter {
@@ -113,9 +112,9 @@ public class KeepEmployeePresenter {
 
         switch (valueItem) {
             case "Normal":
-                return new NormalBonus("Normal", LocalDate.now());
+                return new NormalBonus("Normal");
             case "Generoso":
-                return new GenerousBonus("Generoso", LocalDate.now());
+                return new GenerousBonus("Generoso");
         }
 
         return null;
