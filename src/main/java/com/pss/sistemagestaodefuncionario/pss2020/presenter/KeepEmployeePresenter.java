@@ -31,7 +31,7 @@ public class KeepEmployeePresenter {
         this.employee = null;
         this.employeeCollection = employeeCollection;
         this.log = log;
-        
+
         view = new KeepEmployeeView();
         view.setLocation(20, 20);
 
@@ -77,9 +77,9 @@ public class KeepEmployeePresenter {
         }
 
         checkFieldsIsEmpty();
-        
+
         employee = new Employee();
-        
+
         employee.setId(generateRandomId());
         employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
         employee.setName(view.getTfdName().getText());
@@ -89,10 +89,10 @@ public class KeepEmployeePresenter {
         employee.setSalary(getAndConvertSalaryField());
         employee.setNumberOfAbsence(Integer.parseInt(view.getTfdAbsence().getText()));
         employee.setAdmissionDate(DateManipulation.stringToLocalDate(view.getFfdAdmission().getText()));
-        
+
         verifyEmployeeOfTheMonthCondition();
     }
-    
+
     private void createAllBonusOfEmployee() throws Exception {
         employee.getBonusCollection().addBonus(getInstanceOfBonus());
         employee.getBonusCollection().addBonus(new AttendanceBonus("Assiduidade"));
@@ -148,7 +148,7 @@ public class KeepEmployeePresenter {
 
         verifyEmployeeOfTheMonthCondition();
     }
-    
+
     public void verifyEmployeeOfTheMonthCondition() throws Exception {
         if (view.getChbEmployeeOfTheMonth().isSelected()) {
             if (checkIfEmployeeOfTheMonthIsUnique()) {

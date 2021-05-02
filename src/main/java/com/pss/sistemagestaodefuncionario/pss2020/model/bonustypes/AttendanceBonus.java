@@ -16,12 +16,18 @@ public class AttendanceBonus extends Bonus {
         double bonusPercentage = getBonusPercentage(employee.getNumberOfAbsence());
         value = employee.getBaseSalary() * bonusPercentage;
     }
-    
+
     private double getBonusPercentage(int numberOfAbsence) throws Exception {
-        if (numberOfAbsence == 0) { return 0.10; }
-        if (numberOfAbsence >= 1 && numberOfAbsence <= 3) { return 0.05; }
-        if (numberOfAbsence >= 4) { return 0.01; }
-        
+        if (numberOfAbsence == 0) {
+            return 0.10;
+        }
+        if (numberOfAbsence >= 1 && numberOfAbsence <= 3) {
+            return 0.05;
+        }
+        if (numberOfAbsence >= 4) {
+            return 0.01;
+        }
+
         throw new Exception("Não é possível realizar o cálculo com número de faltas negativo!");
     }
 

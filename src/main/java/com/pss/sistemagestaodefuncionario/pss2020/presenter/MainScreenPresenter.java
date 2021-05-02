@@ -2,8 +2,8 @@ package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 
 import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
+import com.pss.sistemagestaodefuncionario.pss2020.model.log.JsonLog;
 import com.pss.sistemagestaodefuncionario.pss2020.model.log.ManagerLog;
-import com.pss.sistemagestaodefuncionario.pss2020.model.log.TxtLog;
 import com.pss.sistemagestaodefuncionario.pss2020.model.observer.IObserver;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
 import com.pss.sistemagestaodefuncionario.pss2020.view.MainScreenView;
@@ -27,7 +27,7 @@ public class MainScreenPresenter implements IObserver {
         view = new MainScreenView();
         view.setExtendedState(JFrame.MAXIMIZED_BOTH);
         view.setVisible(true);
-        log = new ManagerLog(new TxtLog());
+        log = new ManagerLog(new JsonLog());
         employeeCollection = EmployeeCollection.getInstance();
 
         initPresenters();
@@ -35,7 +35,7 @@ public class MainScreenPresenter implements IObserver {
         initListeners();
         setNumberOfEmployees();
     }
-    
+
     public static MainScreenPresenter getInstance() throws Exception {
         if (instance == null) {
             instance = new MainScreenPresenter();
@@ -47,11 +47,11 @@ public class MainScreenPresenter implements IObserver {
         keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection, log);
         searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection, log);
         calculateSalaryPresenter = CalculateSalaryPresenter.getInstance(employeeCollection, log);
-        
+
         view.add(keepEmployeePresenter.getView());
         view.add(searchEmployeePresenter.getView());
         view.add(calculateSalaryPresenter.getView());
-        
+
     }
 
     private void initListeners() throws Exception {
@@ -76,19 +76,19 @@ public class MainScreenPresenter implements IObserver {
                     calculateSalaryPresenter.getView().setVisible(true);
                 }
             });
-            
+
             view.getMniSetupLog().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
                     new SetupLogPresenter(log);
                 }
             });
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void setNumberOfEmployees() {
         view.getLblAmountEmployees().setText(String.valueOf(employeeCollection.getEmployees().size()));
     }

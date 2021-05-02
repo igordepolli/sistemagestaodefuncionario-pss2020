@@ -107,7 +107,7 @@ public class JNumberFormatField extends JTextField {
     public final BigDecimal getValue() {
         return new BigDecimal(getText().replaceAll("[^0-9]", "")).divide(new BigDecimal(Math.pow(10, numberFormat.getMaximumFractionDigits())));
     }
-    
+
     /**
      * *
      * Recupera o formatador atual do campo**
@@ -121,6 +121,7 @@ public class JNumberFormatField extends JTextField {
     /**
      * *
      * Define o formatador do campo** @param numberFormat
+     *
      * @param numberFormat
      */
     public void setNumberFormat(NumberFormat numberFormat) {
@@ -148,7 +149,8 @@ public class JNumberFormatField extends JTextField {
     /**
      * *
      * Recupera o limite do campo.** @return
-     * @return 
+     *
+     * @return
      */
     public int getLimit() {
         return limit;
@@ -158,8 +160,7 @@ public class JNumberFormatField extends JTextField {
      * *
      * Define o limite do campo, limit < 0 para deixar livre (default) Ignora os
      * pontos e virgulas do formato, conta* somente com os números** @param
-     * limit
-     * @param limit
+     * limit @param limit
      */
     public void setLimit(int limit) {
         this.limit = limit;

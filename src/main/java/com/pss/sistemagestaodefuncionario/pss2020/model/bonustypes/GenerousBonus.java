@@ -15,5 +15,5 @@ public class GenerousBonus extends Bonus {
         date = localDate;
         value = 500.00;
     }
-    
+
 }

@@ -10,21 +10,21 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 public class SetupLogPresenter {
-    
+
     private final SetupLogView view;
     private final ManagerLog log;
 
     public SetupLogPresenter(ManagerLog log) {
         view = new SetupLogView(null, true);
         this.log = log;
-        
+
         initListeners();
-        
+
         view.setModal(true);
         view.setLocationRelativeTo(null);
         view.setVisible(true);
     }
-    
+
     private void initListeners() {
         view.getBtnSave().addActionListener(new ActionListener() {
             @Override
@@ -40,7 +40,7 @@ public class SetupLogPresenter {
                         JOptionPane.showMessageDialog(view, ex.getMessage(), "Falha ao escrever no log", JOptionPane.ERROR_MESSAGE);
                     }
                 }
-                
+
             }
         });
     }
@@ -50,19 +50,19 @@ public class SetupLogPresenter {
 
         switch (indexItem) {
             case 0:
-                log.setLog(new TxtLog());
-                break;
-            case 1:
                 log.setLog(new JsonLog());
                 break;
-            case 2:
+            case 1:
                 log.setLog(new XmlLog());
+                break;
+            case 2:
+                log.setLog(new TxtLog());
                 break;
         }
     }
-    
+
     public SetupLogView getView() {
         return view;
     }
-    
+
 }

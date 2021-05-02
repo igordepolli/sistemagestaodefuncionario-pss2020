@@ -13,7 +13,9 @@ public class EmployeeOfTheMonthBonus extends Bonus {
     @Override
     public void calculate(Employee employee, LocalDate localDate) throws Exception {
         date = localDate;
-        if (employee.isEmployeeOfTheMonth()) { value = 500.00; }
+        if (employee.isEmployeeOfTheMonth()) {
+            value = 500.00;
+        }
     }
-    
+
 }

@@ -8,10 +8,10 @@ public class TxtLog implements ILog {
 
     private final FileWriter file;
 
-    public TxtLog() throws Exception {        
+    public TxtLog() throws Exception {
         file = new FileWriter("txtlog.txt");
     }
-     
+
     @Override
     public void write(Employee employee, String action) throws Exception {
         file.write("Funcionário " + employee.getName() + " " + action + "\n");
@@ -39,5 +39,5 @@ public class TxtLog implements ILog {
         file.write(errorMessage + "\n");
         file.flush();
     }
-    
+
 }

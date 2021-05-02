@@ -7,8 +7,6 @@ package com.pss.sistemagestaodefuncionario.pss2020.view;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTable;
 
 /**
  *
@@ -18,6 +16,7 @@ public class SetupLogView extends javax.swing.JDialog {
 
     /**
      * Creates new form BonusHistory
+     *
      * @param parent
      * @param modal
      */
@@ -49,11 +48,11 @@ public class SetupLogView extends javax.swing.JDialog {
         jMenuBar1.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Histórico de Bônus");
+        setTitle("Configurar Log");
 
         jLabel1.setText("Log");
 
-        cbxLog.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TXT", "JSON", "XML" }));
+        cbxLog.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "JSON", "XML", "TXT" }));
 
         btnSave.setText("Salvar");
 

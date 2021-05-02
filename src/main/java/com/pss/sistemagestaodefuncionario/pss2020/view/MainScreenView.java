@@ -1,6 +1,5 @@
 package com.pss.sistemagestaodefuncionario.pss2020.view;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 
@@ -166,5 +165,5 @@ public class MainScreenView extends javax.swing.JFrame {
     public JMenuItem getMniSetupLog() {
         return mniSetupLog;
     }
-    
+
 }

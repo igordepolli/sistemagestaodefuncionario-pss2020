@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-
 public class JsonLog implements ILog {
 
     private final FileWriter file;
@@ -38,17 +37,13 @@ public class JsonLog implements ILog {
 
     @Override
     public void write(EmployeeCollection employeeCollection) throws Exception {
-        JSONObject obj = new JSONObject();
-        JSONObject valuesObj = new JSONObject();
-        JSONArray list = new JSONArray();
-        obj.put(null, "Salário consultado para o(s) funcionário(s)");
+        JSONArray array = new JSONArray();
         for (Employee employee : employeeCollection.getEmployees()) {
-            valuesObj.put("Funcionário", employee.getName());
+            array.put(employee.getName());
         }
-        list.put(valuesObj);
-        obj.accumulate(null, list);
+        JSONObject obj = new JSONObject();
+        obj.put("Salário calculado para o(s) funcionário(s)", array);
         file.write(obj.toString());
-        file.write("\n");
         file.flush();
     }
 

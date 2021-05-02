@@ -156,5 +156,5 @@ public class CalculateSalaryView extends javax.swing.JInternalFrame {
     public JTable getTblEmployees() {
         return tblEmployees;
     }
-    
+
 }

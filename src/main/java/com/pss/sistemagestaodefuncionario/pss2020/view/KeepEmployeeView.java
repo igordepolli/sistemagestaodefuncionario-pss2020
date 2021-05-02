@@ -13,7 +13,6 @@ import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-import javax.swing.text.NavigationFilter.FilterBypass;
 
 public class KeepEmployeeView extends javax.swing.JInternalFrame {
 
@@ -242,7 +241,7 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
     public JButton getBtnClose() {
         return btnClose;
     }
-    
+
     public JPanel getPanelButtons() {
         return panelButtons;
     }
@@ -290,6 +289,5 @@ public class KeepEmployeeView extends javax.swing.JInternalFrame {
     public JNumberFormatField getTfdSalary() {
         return (JNumberFormatField) tfdSalary;
     }
-    
-    
+
 }

@@ -11,14 +11,14 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
 
     public KeepEmployeePresenterIncludeState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) {
         super(presenter, employeeCollection);
-        
+
         setView();
         initListeners();
-        
+
         presenter.setEmployee(null);
         presenter.getView().setVisible(true);
     }
-    
+
     private void initListeners() {
         presenter.getView().getBtnSave().addActionListener(new ActionListener() {
             @Override
@@ -26,7 +26,7 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
                 save();
             }
         });
-        
+
         presenter.getView().getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -34,7 +34,7 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
             }
         });
     }
-    
+
     @Override
     public void save() {
         try {
@@ -55,13 +55,13 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
             }
         }
     }
-    
+
     private void setView() {
         presenter.cleanFields();
         setFields();
         setButtons();
     }
-    
+
     private void setFields() {
         presenter.getView().getCbxOccupation().setEnabled(true);
         presenter.getView().getTfdName().setEditable(true);
@@ -72,7 +72,7 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
         presenter.getView().getChbEmployeeOfTheMonth().setEnabled(true);
         presenter.getView().getFfdAdmission().setEditable(true);
     }
-    
+
     private void setButtons() {
         presenter.getView().getBtnSave().setEnabled(true);
         presenter.getView().getBtnEdit().setEnabled(false);

@@ -16,15 +16,25 @@ public class ServiceTimeBonus extends Bonus {
         double bonusPercentage = getBonusPercentage(employee.getYearsOfService());
         value = employee.getBaseSalary() * bonusPercentage;
     }
-    
+
     private double getBonusPercentage(int yearsOfService) {
-        if (yearsOfService >= 20) { return 0.15; }
-        if (yearsOfService >= 16) { return 0.1; }
-        if (yearsOfService >= 11) { return 0.08; }
-        if (yearsOfService >= 6) { return 0.03; }
-        if (yearsOfService >= 1) { return 0.02; }
-        
+        if (yearsOfService >= 20) {
+            return 0.15;
+        }
+        if (yearsOfService >= 16) {
+            return 0.1;
+        }
+        if (yearsOfService >= 11) {
+            return 0.08;
+        }
+        if (yearsOfService >= 6) {
+            return 0.03;
+        }
+        if (yearsOfService >= 1) {
+            return 0.02;
+        }
+
         return 0;
     }
-    
+
 }

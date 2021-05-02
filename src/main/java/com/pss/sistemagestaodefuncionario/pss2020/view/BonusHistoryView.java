@@ -16,6 +16,7 @@ public class BonusHistoryView extends javax.swing.JDialog {
 
     /**
      * Creates new form BonusHistory
+     *
      * @param parent
      * @param modal
      */

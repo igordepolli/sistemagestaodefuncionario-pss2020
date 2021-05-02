@@ -26,7 +26,7 @@ public class SearchEmployeePresenter implements IObserver {
     private SearchEmployeePresenter(EmployeeCollection employeeCollection, ManagerLog log) throws Exception {
         this.employeeCollection = employeeCollection;
         this.log = log;
-        
+
         view = new SearchEmployeeView();
         view.setLocation(20, 350);
 
@@ -50,7 +50,7 @@ public class SearchEmployeePresenter implements IObserver {
                 view.dispose();
             }
         });
-        
+
         view.getBtnSearch().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -175,7 +175,7 @@ public class SearchEmployeePresenter implements IObserver {
             view.getBtnViewEmployee().setEnabled(false);
         }
     }
-    
+
     private void defineTableBehavior(String textInNameTextField) throws Exception {
         if (textInNameTextField.equals("")) {
             loadEmployees();
@@ -200,7 +200,7 @@ public class SearchEmployeePresenter implements IObserver {
 
     private void loadEmployees() {
         clearTable();
-        
+
         for (Employee employee : employeeCollection.getEmployees()) {
             tableEmployees.addRow(new Object[]{
                 employee.getId(),

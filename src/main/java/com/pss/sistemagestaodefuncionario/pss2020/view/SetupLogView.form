@@ -23,7 +23,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="title" type="java.lang.String" value="Hist&#xf3;rico de B&#xf4;nus"/>
+    <Property name="title" type="java.lang.String" value="Configurar Log"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -83,9 +83,9 @@
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="3">
-            <StringItem index="0" value="TXT"/>
-            <StringItem index="1" value="JSON"/>
-            <StringItem index="2" value="XML"/>
+            <StringItem index="0" value="JSON"/>
+            <StringItem index="1" value="XML"/>
+            <StringItem index="2" value="TXT"/>
           </StringArray>
         </Property>
       </Properties>

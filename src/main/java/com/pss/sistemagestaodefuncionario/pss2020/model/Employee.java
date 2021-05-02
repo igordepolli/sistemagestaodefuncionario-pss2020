@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class Employee {
-    
+
     private String id;
     private String name;
     private int age;
@@ -44,7 +44,7 @@ public class Employee {
         this.admissionDate = admissionDate;
         this.employeeOfTheMonth = employeeOfTheMonth;
     }
-    
+
     public int getYearsOfService() {
         LocalDate dateNow = LocalDate.now();
         Period period = Period.between(admissionDate, dateNow);
@@ -58,7 +58,7 @@ public class Employee {
     public double getBaseSalary() {
         return baseSalary;
     }
-    
+
     public int getNumberOfAbsence() {
         return numberOfAbsence;
     }
@@ -110,7 +110,7 @@ public class Employee {
     public void setBaseSalary(double baseSalary) {
         this.baseSalary = baseSalary;
     }
-    
+
     public void setOccupation(String occupation) {
         this.occupation = occupation;
     }
@@ -130,5 +130,5 @@ public class Employee {
     public void setEmployeeOfTheMonth(boolean employeeOfTheMonth) {
         this.employeeOfTheMonth = employeeOfTheMonth;
     }
-    
+
 }

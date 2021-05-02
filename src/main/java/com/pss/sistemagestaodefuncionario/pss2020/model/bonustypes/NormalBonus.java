@@ -9,11 +9,11 @@ public class NormalBonus extends Bonus {
     public NormalBonus(String description) {
         super(description);
     }
-    
+
     @Override
     public void calculate(Employee employee, LocalDate localDate) throws Exception {
         date = localDate;
         value = 100.00;
     }
-    
+
 }

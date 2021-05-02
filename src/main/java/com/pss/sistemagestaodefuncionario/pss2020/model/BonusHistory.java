@@ -3,7 +3,7 @@ package com.pss.sistemagestaodefuncionario.pss2020.model;
 import java.time.LocalDate;
 
 public class BonusHistory {
-    
+
     private String nameEmployee;
     private LocalDate dateBonus;
     private double baseSalaryOfEmployee;
@@ -61,5 +61,5 @@ public class BonusHistory {
     public void setSalaryOfEmployee(double salaryOfEmployee) {
         this.salaryOfEmployee = salaryOfEmployee;
     }
-    
+
 }

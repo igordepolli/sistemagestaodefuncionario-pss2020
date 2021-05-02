@@ -30,7 +30,7 @@ public class CalculateSalaryPresenter {
         this.employeeCollection = employeeCollection;
         this.listBonusHistory = new ArrayList<>();
         this.log = log;
-        
+
         view = new CalculateSalaryView();
         view.setLocation(800, 20);
 
@@ -131,7 +131,7 @@ public class CalculateSalaryPresenter {
         for (Employee emp : employeeCollection.getEmployees()) {
             CalculateAllBonusByEmployee calculateAllBonusByEmployee = new CalculateAllBonusByEmployee(emp, localDate);
             calculateAllBonusByEmployee.calculate();
-            
+
             for (Bonus bonus : emp.getBonusCollection().getListBonus()) {
                 emp.setSalary(emp.getSalary() + bonus.getValue());
 
@@ -142,7 +142,7 @@ public class CalculateSalaryPresenter {
                 bonusHistory.setDescriptionBonus(bonus.getDescription());
                 bonusHistory.setValueOfBonus(bonus.getValue());
                 bonusHistory.setSalaryOfEmployee(emp.getSalary());
-                
+
                 listBonusHistory.add(bonusHistory);
             }
         }

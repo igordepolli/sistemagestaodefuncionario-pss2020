@@ -11,29 +11,29 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
 
     public KeepEmployeePresenterViewState(KeepEmployeePresenter presenter, EmployeeCollection employeeCollection) throws Exception {
         super(presenter, employeeCollection);
-        
+
         setView();
         presenter.loadFields();
         initListeners();
-        
+
         presenter.getView().setVisible(true);
     }
-    
-    private void initListeners() {        
+
+    private void initListeners() {
         presenter.getView().getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 presenter.getView().dispose();
             }
         });
-        
+
         presenter.getView().getBtnEdit().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 update();
             }
         });
-        
+
         presenter.getView().getBtnDelete().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
@@ -41,12 +41,12 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
             }
         });
     }
-   
+
     @Override
     public void update() {
         presenter.setState(new KeepEmployeePresenterEditState(presenter, employeeCollection));
     }
-    
+
     @Override
     public void delete() {
         try {
@@ -66,19 +66,19 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
             }
         }
     }
-    
+
     private boolean confirmDeleteEmployee() throws Exception {
         int result = JOptionPane.showConfirmDialog(presenter.getView(), "Deseja mesmo remover o funcionário " + presenter.getEmployee().getName() + "?");
-        
+
         return result == JOptionPane.YES_OPTION;
     }
-    
+
     private void setView() {
         presenter.cleanFields();
         setFields();
         setButtons();
     }
-    
+
     private void setFields() {
         presenter.getView().getCbxOccupation().setEnabled(false);
         presenter.getView().getTfdName().setEditable(false);
@@ -89,7 +89,7 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
         presenter.getView().getChbEmployeeOfTheMonth().setEnabled(false);
         presenter.getView().getFfdAdmission().setEditable(false);
     }
-    
+
     private void setButtons() {
         presenter.getView().getBtnSave().setEnabled(false);
         presenter.getView().getBtnEdit().setEnabled(true);

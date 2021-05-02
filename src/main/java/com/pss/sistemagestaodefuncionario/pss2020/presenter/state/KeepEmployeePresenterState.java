@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 public abstract class KeepEmployeePresenterState {
-    
+
     protected KeepEmployeePresenter presenter;
     protected EmployeeCollection employeeCollection;
 
@@ -16,16 +16,16 @@ public abstract class KeepEmployeePresenterState {
         this.employeeCollection = employeeCollection;
         cleanListeners();
     }
-    
+
     public void save() {
     }
-    
+
     public void update() {
     }
-    
+
     public void delete() {
     }
-    
+
     private void cleanListeners() {
         for (Component component : presenter.getView().getPanelButtons().getComponents()) {
             if (component instanceof JButton) {
