@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 public class SetupLogPresenter {
     
     private final SetupLogView view;
-    private ManagerLog log;
+    private final ManagerLog log;
 
     public SetupLogPresenter(ManagerLog log) {
         view = new SetupLogView(null, true);
@@ -50,13 +50,13 @@ public class SetupLogPresenter {
 
         switch (indexItem) {
             case 0:
-                log.setLog(new TxtLog(null));
+                log.setLog(new TxtLog());
                 break;
             case 1:
-                log.setLog(new JsonLog(null));
+                log.setLog(new JsonLog());
                 break;
             case 2:
-                log.setLog(new XmlLog(null));
+                log.setLog(new XmlLog());
                 break;
         }
     }

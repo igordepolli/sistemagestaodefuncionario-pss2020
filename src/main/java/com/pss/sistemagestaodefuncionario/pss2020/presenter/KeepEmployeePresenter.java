@@ -3,8 +3,12 @@ package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 import com.pss.sistemagestaodefuncionario.pss2020.model.Bonus;
 import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
+import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.AttendanceBonus;
+import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.EmployeeOfTheMonthBonus;
 import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.GenerousBonus;
 import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.NormalBonus;
+import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.OccupationBonus;
+import com.pss.sistemagestaodefuncionario.pss2020.model.bonustypes.ServiceTimeBonus;
 import com.pss.sistemagestaodefuncionario.pss2020.model.log.ManagerLog;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.command.KeepEmployeePresenterCommand;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterState;
@@ -80,13 +84,21 @@ public class KeepEmployeePresenter {
         employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
         employee.setName(view.getTfdName().getText());
         employee.setAge(Integer.parseInt(view.getFfdAge().getText()));
-        employee.getBonusCollection().addBonus(getInstanceOfBonus());
+        createAllBonusOfEmployee();
         employee.setBaseSalary(getAndConvertSalaryField());
         employee.setSalary(getAndConvertSalaryField());
         employee.setNumberOfAbsence(Integer.parseInt(view.getTfdAbsence().getText()));
         employee.setAdmissionDate(DateManipulation.stringToLocalDate(view.getFfdAdmission().getText()));
         
         verifyEmployeeOfTheMonthCondition();
+    }
+    
+    private void createAllBonusOfEmployee() throws Exception {
+        employee.getBonusCollection().addBonus(getInstanceOfBonus());
+        employee.getBonusCollection().addBonus(new AttendanceBonus("Assiduidade"));
+        employee.getBonusCollection().addBonus(new EmployeeOfTheMonthBonus("Funcionário do Mês"));
+        employee.getBonusCollection().addBonus(new OccupationBonus("Cargo"));
+        employee.getBonusCollection().addBonus(new ServiceTimeBonus("Tempo de serviço"));
     }
 
     private boolean fieldsIsEmpty() {

@@ -3,35 +3,61 @@ package com.pss.sistemagestaodefuncionario.pss2020.model.log;
 import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
 import java.io.FileWriter;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
-public class JsonLog extends Log {
+
+public class JsonLog implements ILog {
 
     private final FileWriter file;
 
-    public JsonLog(String filePath) throws Exception {
-        super(filePath);
-        
+    public JsonLog() throws Exception {
         file = new FileWriter("jsonlog.json");
     }
-     
+
     @Override
     public void write(Employee employee, String action) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JSONObject obj = new JSONObject();
+        obj.put("Funcionário", employee.getName());
+        obj.put("Ação", action);
+
+        file.write(obj.toString());
+        file.write("\n");
+        file.flush();
     }
 
     @Override
     public void write(Employee employee) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JSONObject obj = new JSONObject();
+        obj.put("Bônus consultado para o funcionário", employee.getName());
+
+        file.write(obj.toString());
+        file.write("\n");
+        file.flush();
     }
 
     @Override
     public void write(EmployeeCollection employeeCollection) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JSONObject obj = new JSONObject();
+        JSONObject valuesObj = new JSONObject();
+        JSONArray list = new JSONArray();
+        obj.put(null, "Salário consultado para o(s) funcionário(s)");
+        for (Employee employee : employeeCollection.getEmployees()) {
+            valuesObj.put("Funcionário", employee.getName());
+        }
+        list.put(valuesObj);
+        obj.accumulate(null, list);
+        file.write(obj.toString());
+        file.write("\n");
+        file.flush();
     }
 
     @Override
     public void write(String errorMessage) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JSONObject obj = new JSONObject();
+        obj.put("Error:", errorMessage);
+        file.write(obj.toString());
+        file.flush();
     }
-    
+
 }

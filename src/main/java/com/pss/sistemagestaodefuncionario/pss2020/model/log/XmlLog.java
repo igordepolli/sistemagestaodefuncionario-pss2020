@@ -4,14 +4,14 @@ import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
 import java.io.FileNotFoundException;
 
-public class XmlLog extends Log {
+public class XmlLog implements ILog {
 
-    public XmlLog(String filePath) throws FileNotFoundException {
-        super(filePath);
+    public XmlLog() throws FileNotFoundException {
     }
 
     @Override
     public void write(Employee employee, String action) throws Exception {
+        
     }
 
     @Override

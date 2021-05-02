@@ -27,7 +27,7 @@ public class MainScreenPresenter implements IObserver {
         view = new MainScreenView();
         view.setExtendedState(JFrame.MAXIMIZED_BOTH);
         view.setVisible(true);
-        log = new ManagerLog(new TxtLog(null));
+        log = new ManagerLog(new TxtLog());
         employeeCollection = EmployeeCollection.getInstance();
 
         initPresenters();

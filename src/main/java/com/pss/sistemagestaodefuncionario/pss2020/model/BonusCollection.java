@@ -24,6 +24,10 @@ public class BonusCollection {
         listBonus.remove(bonus);
     }
     
+    public void cleanList() {
+        listBonus.removeAll(listBonus);
+    }
+    
     public boolean isEmpty() {
         return listBonus.isEmpty();
     }

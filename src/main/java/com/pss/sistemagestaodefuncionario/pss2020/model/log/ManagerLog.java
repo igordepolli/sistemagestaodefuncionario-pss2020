@@ -5,9 +5,9 @@ import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
 
 public class ManagerLog {
     
-    private Log log;
+    private ILog log;
 
-    public ManagerLog(Log log) throws Exception {
+    public ManagerLog(ILog log) throws Exception {
         this.log = log;
     }
     
@@ -27,7 +27,7 @@ public class ManagerLog {
         log.write(errorMessage);
     }
 
-    public void setLog(Log log) {
+    public void setLog(ILog log) {
         this.log = log;
     }
     

@@ -4,15 +4,12 @@ import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
 import java.io.FileWriter;
 
-public class TxtLog extends Log {
+public class TxtLog implements ILog {
 
     private final FileWriter file;
 
-    public TxtLog(String filePath) throws Exception {
-        super(filePath);
-        
+    public TxtLog() throws Exception {        
         file = new FileWriter("txtlog.txt");
-        file.write(logHistory + "\n");
     }
      
     @Override
