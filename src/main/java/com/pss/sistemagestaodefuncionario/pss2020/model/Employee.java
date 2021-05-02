@@ -17,6 +17,7 @@ public class Employee {
     private boolean employeeOfTheMonth;
 
     public Employee() {
+        bonusCollection = new BonusCollection();
     }
 
     public Employee(String name, int age, double salary, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
@@ -106,6 +107,10 @@ public class Employee {
         this.salary = salary;
     }
 
+    public void setBaseSalary(double baseSalary) {
+        this.baseSalary = baseSalary;
+    }
+    
     public void setOccupation(String occupation) {
         this.occupation = occupation;
     }

@@ -41,9 +41,11 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
             presenter.setCommand(new KeepEmployeePresenterIncludeCommand(presenter.getEmployee(), employeeCollection));
             presenter.getCommand().execute();
             JOptionPane.showMessageDialog(presenter.getView(), "Funcionário inserido com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            presenter.setEmployee(null);
             presenter.cleanFields();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            presenter.setEmployee(null);
         }
     }
     
@@ -65,8 +67,8 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
     }
     
     private void setButtons() {
-        presenter.getView().getBtnSave().setVisible(true);
-        presenter.getView().getBtnEdit().setVisible(false);
-        presenter.getView().getBtnDelete().setVisible(false);
+        presenter.getView().getBtnSave().setEnabled(true);
+        presenter.getView().getBtnEdit().setEnabled(false);
+        presenter.getView().getBtnDelete().setEnabled(false);
     }
 }

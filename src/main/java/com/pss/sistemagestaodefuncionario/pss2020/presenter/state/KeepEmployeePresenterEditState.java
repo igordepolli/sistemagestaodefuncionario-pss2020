@@ -25,6 +25,13 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
                 save();
             }
         });
+        
+        presenter.getView().getBtnClose().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                presenter.getView().dispose();
+            }
+        });
     }
         
     @Override
@@ -33,8 +40,8 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
             presenter.getTextInFieldsAndSetEmployee();
             presenter.setCommand(new KeepEmployeePresenterEditCommand(presenter.getEmployee(), employeeCollection));
             presenter.getCommand().execute();
-            presenter.setState(new KeepEmployeePresenterViewState(presenter, employeeCollection));
             JOptionPane.showMessageDialog(presenter.getView(), "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+            presenter.setState(new KeepEmployeePresenterViewState(presenter, employeeCollection));
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
@@ -57,8 +64,8 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
     }
     
     private void setButtons() {
-        presenter.getView().getBtnSave().setVisible(true);
-        presenter.getView().getBtnEdit().setVisible(false);
-        presenter.getView().getBtnDelete().setVisible(false);
+        presenter.getView().getBtnSave().setEnabled(true);
+        presenter.getView().getBtnEdit().setEnabled(false);
+        presenter.getView().getBtnDelete().setEnabled(false);
     }
 }

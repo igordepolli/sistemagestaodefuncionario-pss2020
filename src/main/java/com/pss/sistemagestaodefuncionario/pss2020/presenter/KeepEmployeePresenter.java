@@ -9,12 +9,9 @@ import com.pss.sistemagestaodefuncionario.pss2020.presenter.command.KeepEmployee
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterState;
 import com.pss.sistemagestaodefuncionario.pss2020.utils.DateManipulation;
 import com.pss.sistemagestaodefuncionario.pss2020.view.KeepEmployeeView;
-import java.awt.Component;
-import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
-import javax.swing.JButton;
 
 public class KeepEmployeePresenter {
 
@@ -26,9 +23,9 @@ public class KeepEmployeePresenter {
     private final EmployeeCollection employeeCollection;
 
     private KeepEmployeePresenter(EmployeeCollection employeeCollection) throws Exception {
-
         this.employee = null;
         this.employeeCollection = employeeCollection;
+        
         view = new KeepEmployeeView();
         view.setLocation(20, 20);
 
@@ -40,16 +37,6 @@ public class KeepEmployeePresenter {
         }
 
         return instance;
-    }
-
-    public void cleanListeners() {
-        for (Component component : getView().getComponents()) {
-            if (component instanceof JButton) {
-                for (ActionListener actionListener : ((JButton) component).getActionListeners()) {
-                    ((JButton) component).removeActionListener(actionListener);
-                }
-            }
-        }
     }
 
     public void cleanFields() {
@@ -69,12 +56,13 @@ public class KeepEmployeePresenter {
         }
     }
 
-    public void checkIfEmployeeOfTheMonthIsUnique(EmployeeCollection employeeCollection) throws Exception {
-        for (Employee employee : employeeCollection.getEmployees()) {
-            if (employee.isEmployeeOfTheMonth()) {
-                throw new Exception("O funcionário " + employee.getName() + " já está marcado como funcionário do mês!");
+    private boolean checkIfEmployeeOfTheMonthIsUnique() throws Exception {
+        for (Employee emp : employeeCollection.getEmployees()) {
+            if (emp.isEmployeeOfTheMonth()) {
+                throw new Exception("O funcionário " + emp.getName() + " já está marcado como funcionário do mês!");
             }
         }
+        return true;
     }
 
     public void createNewEmployee() throws Exception {
@@ -82,9 +70,21 @@ public class KeepEmployeePresenter {
             throw new Exception("Não é possível criar um novo usuário!");
         }
 
+        checkFieldsIsEmpty();
+        
         employee = new Employee();
+        
         employee.setId(generateRandomId());
-        getTextInFieldsAndSetEmployee();
+        employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
+        employee.setName(view.getTfdName().getText());
+        employee.setAge(Integer.parseInt(view.getFfdAge().getText()));
+        employee.getBonusCollection().addBonus(getInstanceOfBonus());
+        employee.setBaseSalary(getAndConvertSalaryField());
+        employee.setSalary(getAndConvertSalaryField());
+        employee.setNumberOfAbsence(Integer.parseInt(view.getTfdAbsence().getText()));
+        employee.setAdmissionDate(DateManipulation.stringToLocalDate(view.getFfdAdmission().getText()));
+        
+        verifyEmployeeOfTheMonthCondition();
     }
 
     private boolean fieldsIsEmpty() {
@@ -109,12 +109,12 @@ public class KeepEmployeePresenter {
     }
 
     private Bonus getInstanceOfBonus() {
-        int indexItem = view.getCbxOccupation().getSelectedIndex();
+        String valueItem = String.valueOf(view.getCbxBonus().getSelectedItem());
 
-        switch (indexItem) {
-            case 0:
+        switch (valueItem) {
+            case "Normal":
                 return new NormalBonus("Normal", LocalDate.now());
-            case 1:
+            case "Generoso":
                 return new GenerousBonus("Generoso", LocalDate.now());
         }
 
@@ -130,9 +130,19 @@ public class KeepEmployeePresenter {
         employee.getBonusCollection().getListBonus().set(0, getInstanceOfBonus());
         employee.setSalary(getAndConvertSalaryField());
         employee.setNumberOfAbsence(Integer.parseInt(view.getTfdAbsence().getText()));
-        employee.setEmployeeOfTheMonth(view.getChbEmployeeOfTheMonth().isSelected());
         employee.setAdmissionDate(DateManipulation.stringToLocalDate(view.getFfdAdmission().getText()));
 
+        verifyEmployeeOfTheMonthCondition();
+    }
+    
+    public void verifyEmployeeOfTheMonthCondition() throws Exception {
+        if (view.getChbEmployeeOfTheMonth().isSelected()) {
+            if (checkIfEmployeeOfTheMonthIsUnique()) {
+                employee.setEmployeeOfTheMonth(true);
+            }
+        } else {
+            employee.setEmployeeOfTheMonth(false);
+        }
     }
 
     public void loadFields() throws Exception {
