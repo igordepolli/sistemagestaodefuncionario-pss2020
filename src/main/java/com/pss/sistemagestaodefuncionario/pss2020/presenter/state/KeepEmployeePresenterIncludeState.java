@@ -14,6 +14,8 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
         
         setView();
         initListeners();
+        
+        presenter.getView().setVisible(true);
     }
     
     private void initListeners() {
@@ -27,8 +29,7 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
         presenter.getView().getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                presenter.cleanFields();
-                presenter.getView().setVisible(false);
+                presenter.getView().dispose();
             }
         });
     }
@@ -36,7 +37,6 @@ public class KeepEmployeePresenterIncludeState extends KeepEmployeePresenterStat
     @Override
     public void save() {
         try {
-            presenter.checkFieldsIsEmpty();
             presenter.createNewEmployee();
             presenter.setCommand(new KeepEmployeePresenterIncludeCommand(presenter.getEmployee(), employeeCollection));
             presenter.getCommand().execute();

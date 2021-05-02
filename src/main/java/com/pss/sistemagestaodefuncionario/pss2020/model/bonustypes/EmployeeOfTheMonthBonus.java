@@ -13,7 +13,7 @@ public class EmployeeOfTheMonthBonus extends Bonus {
     @Override
     public void calculate(Employee employee) throws Exception {
         if (employee.isEmployeeOfTheMonth()) {
-            value = 1000.00;
+            value = 500.00;
         }
     }
     

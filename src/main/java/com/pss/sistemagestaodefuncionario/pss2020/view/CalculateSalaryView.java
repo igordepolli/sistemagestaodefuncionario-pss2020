@@ -4,12 +4,12 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JButton;
 import javax.swing.JTable;
 
-public class CalculateWagesView extends javax.swing.JInternalFrame {
+public class CalculateSalaryView extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form SearchEmployeeView
      */
-    public CalculateWagesView() {
+    public CalculateSalaryView() {
         initComponents();
     }
 

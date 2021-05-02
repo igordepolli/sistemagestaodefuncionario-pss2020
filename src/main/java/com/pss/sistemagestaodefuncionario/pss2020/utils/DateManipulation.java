@@ -1,8 +1,6 @@
 package com.pss.sistemagestaodefuncionario.pss2020.utils;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -16,9 +14,8 @@ public class DateManipulation {
     }
 
     public static String localDateToString(LocalDate date) {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        
-        return dateFormat.format(date);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return date.format(formatter);
     }
 
 }

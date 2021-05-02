@@ -1,6 +1,7 @@
 package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
+import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
 import com.pss.sistemagestaodefuncionario.pss2020.view.MainScreenView;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,7 @@ public class MainScreenPresenter {
     private final EmployeeCollection employeeCollection;
     private KeepEmployeePresenter keepEmployeePresenter;
     private SearchEmployeePresenter searchEmployeePresenter;
-    private CalculateWagesPresenter calculateWagesPresenter;
+    private CalculateSalaryPresenter calculateSalaryPresenter;
 
     private MainScreenPresenter() throws Exception {
         view = new MainScreenView();
@@ -38,7 +39,12 @@ public class MainScreenPresenter {
     private void initPresenters() throws Exception {
         keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
         searchEmployeePresenter = SearchEmployeePresenter.getInstance(employeeCollection);
-        calculateWagesPresenter = CalculateWagesPresenter.getInstance(employeeCollection);
+        calculateSalaryPresenter = CalculateSalaryPresenter.getInstance(employeeCollection);
+        
+        view.add(keepEmployeePresenter.getView());
+        view.add(searchEmployeePresenter.getView());
+        view.add(calculateSalaryPresenter.getView());
+        
     }
 
     private void initListeners() throws Exception {
@@ -46,15 +52,13 @@ public class MainScreenPresenter {
             view.getMniKeepEmployee().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    view.add(keepEmployeePresenter.getView());
-                    keepEmployeePresenter.getView().setVisible(true);
+                    keepEmployeePresenter.setState(new KeepEmployeePresenterIncludeState(keepEmployeePresenter, employeeCollection));
                 }
             });
 
             view.getMniSearchEmployee().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
-                    view.add(searchEmployeePresenter.getView());
                     searchEmployeePresenter.getView().setVisible(true);
                 }
             });
@@ -62,8 +66,7 @@ public class MainScreenPresenter {
             view.getMniCalculateWages().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent arg0) {
-                    view.add(calculateWagesPresenter.getView());
-                    calculateWagesPresenter.getView().setVisible(true);
+                    calculateSalaryPresenter.getView().setVisible(true);
                 }
             });
         } catch (Exception ex) {
@@ -73,7 +76,7 @@ public class MainScreenPresenter {
 
     private void registerAllObservers() {
         employeeCollection.registerObserver(searchEmployeePresenter);
-        employeeCollection.registerObserver(calculateWagesPresenter);
+        employeeCollection.registerObserver(calculateSalaryPresenter);
     }
 
     public MainScreenView getView() {

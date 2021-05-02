@@ -52,6 +52,7 @@ public class EmployeeCollection extends Subject {
                 emp = employee;
             }
         }
+        notifyObservers();
     }
     
     public void removeEmployee(Employee employee) {

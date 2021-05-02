@@ -70,6 +70,7 @@ public class SearchEmployeeView extends javax.swing.JInternalFrame {
         btnClose.setText("Fechar");
 
         btnViewEmployee.setText("Visualizar");
+        btnViewEmployee.setEnabled(false);
 
         btnViewBonus.setText("Ver bônus");
         btnViewBonus.setEnabled(false);

@@ -27,6 +27,7 @@ public class SearchEmployeePresenter implements IObserver {
         view.setLocation(20, 350);
 
         constructTableModel();
+        loadEmployees();
         initListeners();
     }
 
@@ -34,7 +35,7 @@ public class SearchEmployeePresenter implements IObserver {
         if (instance == null) {
             instance = new SearchEmployeePresenter(employeeCollection);
         }
-        
+
         return instance;
     }
 
@@ -42,7 +43,19 @@ public class SearchEmployeePresenter implements IObserver {
         view.getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                view.setVisible(false);
+                view.dispose();
+            }
+        });
+        
+        view.getBtnViewBonus().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                try {
+                    Employee emp = getEmployeeSelected();
+                    new BonusHistoryPresenter(emp);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -54,7 +67,6 @@ public class SearchEmployeePresenter implements IObserver {
                     KeepEmployeePresenter keepEmployeePresenter = KeepEmployeePresenter.getInstance(employeeCollection);
                     keepEmployeePresenter.setEmployee(emp);
                     keepEmployeePresenter.setState(new KeepEmployeePresenterViewState(keepEmployeePresenter, employeeCollection));
-                    keepEmployeePresenter.getView().setVisible(true);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
                 }
@@ -113,6 +125,18 @@ public class SearchEmployeePresenter implements IObserver {
         } else {
             view.getBtnViewBonus().setEnabled(false);
             view.getBtnViewEmployee().setEnabled(false);
+        }
+    }
+
+    private void loadEmployees() {
+        for (Employee employee : employeeCollection.getEmployees()) {
+            tabelEmployees.addRow(new Object[]{
+                employee.getId(),
+                employee.getName(),
+                employee.getAge(),
+                employee.getOccupation(),
+                employee.getBaseSalary()
+            });
         }
     }
 

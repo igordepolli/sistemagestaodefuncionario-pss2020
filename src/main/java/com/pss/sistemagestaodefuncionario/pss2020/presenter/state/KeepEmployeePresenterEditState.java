@@ -14,6 +14,8 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
         
         setView();
         initListeners();
+        
+        presenter.getView().setVisible(true);
     }
 
     private void initListeners() {
@@ -28,10 +30,10 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
     @Override
     public void save() {
         try {
-            presenter.checkFieldsIsEmpty();
             presenter.getTextInFieldsAndSetEmployee();
             presenter.setCommand(new KeepEmployeePresenterEditCommand(presenter.getEmployee(), employeeCollection));
             presenter.getCommand().execute();
+            presenter.setState(new KeepEmployeePresenterViewState(presenter, employeeCollection));
             JOptionPane.showMessageDialog(presenter.getView(), "Funcionário atualizado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(presenter.getView(), ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
@@ -39,7 +41,6 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
     }
     
     private void setView() {
-        presenter.cleanFields();
         setFields();
         setButtons();
     }
@@ -48,7 +49,7 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
         presenter.getView().getCbxOccupation().setEnabled(true);
         presenter.getView().getTfdName().setEditable(true);
         presenter.getView().getFfdAge().setEditable(true);
-        presenter.getView().getCbxBonus().setEnabled(false);
+        presenter.getView().getCbxBonus().setEnabled(true);
         presenter.getView().getTfdSalary().setEditable(true);
         presenter.getView().getTfdAbsence().setEditable(true);
         presenter.getView().getChbEmployeeOfTheMonth().setEnabled(true);
@@ -56,8 +57,8 @@ public class KeepEmployeePresenterEditState extends KeepEmployeePresenterState {
     }
     
     private void setButtons() {
-        presenter.getView().getBtnSave().setEnabled(true);
-        presenter.getView().getBtnEdit().setEnabled(false);
-        presenter.getView().getBtnDelete().setEnabled(false);
+        presenter.getView().getBtnSave().setVisible(true);
+        presenter.getView().getBtnEdit().setVisible(false);
+        presenter.getView().getBtnDelete().setVisible(false);
     }
 }

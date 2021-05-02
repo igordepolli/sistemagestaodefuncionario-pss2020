@@ -13,14 +13,22 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
         setView();
         presenter.loadFields();
         initListeners();
+        
+        presenter.getView().setVisible(true);
     }
     
     private void initListeners() {        
         presenter.getView().getBtnClose().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                presenter.cleanFields();
-                presenter.getView().setVisible(false);
+                presenter.getView().dispose();
+            }
+        });
+        
+        presenter.getView().getBtnEdit().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                update();
             }
         });
     }
@@ -42,7 +50,6 @@ public class KeepEmployeePresenterViewState extends KeepEmployeePresenterState {
     }
     
     private void setFields() {
-        presenter.getView().getCbxOccupation().setVisible(false);
         presenter.getView().getCbxOccupation().setEnabled(false);
         presenter.getView().getTfdName().setEditable(false);
         presenter.getView().getFfdAge().setEditable(false);
