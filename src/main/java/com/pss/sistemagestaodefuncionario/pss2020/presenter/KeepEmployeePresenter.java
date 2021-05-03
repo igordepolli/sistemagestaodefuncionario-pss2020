@@ -69,7 +69,7 @@ public class KeepEmployeePresenter {
 
         if (boxEmployeeOfTheMonth) {
             for (Employee emp : employeeCollection.getEmployees()) {
-                if (emp.isEmployeeOfTheMonth()) {
+                if (emp.isEmployeeOfTheMonth() && emp != employee) {
                     throw new Exception("O funcionário " + emp.getName() + " já está marcado como funcionário do mês!");
                 }
             }
