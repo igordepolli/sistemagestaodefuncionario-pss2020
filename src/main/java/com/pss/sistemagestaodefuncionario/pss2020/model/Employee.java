@@ -11,38 +11,13 @@ public class Employee {
     private double baseSalary;
     private double salary;
     private String occupation;
-    private BonusCollection bonusCollection;
+    private final BonusCollection bonusCollection;
     private int numberOfAbsence;
     private LocalDate admissionDate;
     private boolean employeeOfTheMonth;
 
     public Employee() {
         bonusCollection = new BonusCollection();
-    }
-
-    public Employee(String name, int age, double salary, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
-        this.name = name;
-        this.age = age;
-        this.baseSalary = salary;
-        this.salary = salary;
-        this.occupation = occupation;
-        this.bonusCollection = bonusCollection;
-        this.numberOfAbsence = numberOfAbsence;
-        this.admissionDate = admissionDate;
-        this.employeeOfTheMonth = employeeOfTheMonth;
-    }
-
-    public Employee(String id, String name, int age, double salary, String occupation, BonusCollection bonusCollection, int numberOfAbsence, LocalDate admissionDate, boolean employeeOfTheMonth) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.baseSalary = salary;
-        this.salary = salary;
-        this.occupation = occupation;
-        this.bonusCollection = bonusCollection;
-        this.numberOfAbsence = numberOfAbsence;
-        this.admissionDate = admissionDate;
-        this.employeeOfTheMonth = employeeOfTheMonth;
     }
 
     public int getYearsOfService() {
@@ -113,10 +88,6 @@ public class Employee {
 
     public void setOccupation(String occupation) {
         this.occupation = occupation;
-    }
-
-    public void setBonusCollection(BonusCollection bonusCollection) {
-        this.bonusCollection = bonusCollection;
     }
 
     public void setNumberOfAbsence(int numberOfAbsence) {
