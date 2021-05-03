@@ -14,13 +14,14 @@ public class TxtLog implements ILog {
 
     @Override
     public void write(Employee employee, String action) throws Exception {
-        file.write("Funcionário " + employee.getName() + " " + action + "\n");
+        file.write("Funcionário " + employee.getName() + " " + action);
+        file.write("\n");
         file.flush();
     }
 
     @Override
     public void write(Employee employee) throws Exception {
-        file.write("Bônus consultado para o funcionário " + employee.getName() + "\n");
+        file.write("Bônus consultado para o funcionário " + employee.getName());
         file.flush();
     }
 
@@ -30,13 +31,15 @@ public class TxtLog implements ILog {
         for (Employee e : employeeCollection.getEmployees()) {
             file.write(e.getName() + "\n");
         }
-        file.write("]\n");
+        file.write("]");
+        file.write("\n");
         file.flush();
     }
 
     @Override
     public void write(String errorMessage) throws Exception {
-        file.write(errorMessage + "\n");
+        file.write(errorMessage);
+        file.write("\n");
         file.flush();
     }
 

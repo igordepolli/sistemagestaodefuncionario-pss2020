@@ -2,8 +2,8 @@ package com.pss.sistemagestaodefuncionario.pss2020.presenter;
 
 import com.pss.sistemagestaodefuncionario.pss2020.model.Employee;
 import com.pss.sistemagestaodefuncionario.pss2020.model.EmployeeCollection;
-import com.pss.sistemagestaodefuncionario.pss2020.model.log.JsonLog;
 import com.pss.sistemagestaodefuncionario.pss2020.model.log.ManagerLog;
+import com.pss.sistemagestaodefuncionario.pss2020.model.log.XmlLog;
 import com.pss.sistemagestaodefuncionario.pss2020.model.observer.IObserver;
 import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePresenterIncludeState;
 import com.pss.sistemagestaodefuncionario.pss2020.view.MainScreenView;
@@ -27,7 +27,7 @@ public class MainScreenPresenter implements IObserver {
         view = new MainScreenView();
         view.setExtendedState(JFrame.MAXIMIZED_BOTH);
         view.setVisible(true);
-        log = new ManagerLog(new JsonLog());
+        log = new ManagerLog(new XmlLog());
         employeeCollection = EmployeeCollection.getInstance();
 
         initPresenters();

@@ -91,6 +91,7 @@ public class CalculateSalaryPresenter {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 try {
+                    checkIfHasEmployeesInCollection();
                     calculateAllBonus();
                     log.write(employeeCollection);
                     loadBonus();
@@ -187,6 +188,12 @@ public class CalculateSalaryPresenter {
     private void checkIfThereIsBonusCalculated() throws Exception {
         if (listBonusHistory.isEmpty()) {
             throw new Exception("Não há elementos para serem exibidos!");
+        }
+    }
+
+    private void checkIfHasEmployeesInCollection() throws Exception {
+        if (employeeCollection.isEmpty()) {
+            throw new Exception("Não há funcionários para calcular o salário!");
         }
     }
 

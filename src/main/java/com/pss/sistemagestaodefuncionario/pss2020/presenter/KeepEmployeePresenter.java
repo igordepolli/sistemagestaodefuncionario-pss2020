@@ -15,6 +15,8 @@ import com.pss.sistemagestaodefuncionario.pss2020.presenter.state.KeepEmployeePr
 import com.pss.sistemagestaodefuncionario.pss2020.utils.DateManipulation;
 import com.pss.sistemagestaodefuncionario.pss2020.view.KeepEmployeeView;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.UUID;
 
 public class KeepEmployeePresenter {
@@ -62,13 +64,52 @@ public class KeepEmployeePresenter {
         }
     }
 
-    private boolean checkIfEmployeeOfTheMonthIsUnique() throws Exception {
-        for (Employee emp : employeeCollection.getEmployees()) {
-            if (emp.isEmployeeOfTheMonth()) {
-                throw new Exception("O funcionário " + emp.getName() + " já está marcado como funcionário do mês!");
+    private boolean getSelectEmployeeOfTheMonth() throws Exception {
+        boolean boxEmployeeOfTheMonth = view.getChbEmployeeOfTheMonth().isSelected();
+
+        if (boxEmployeeOfTheMonth) {
+            for (Employee emp : employeeCollection.getEmployees()) {
+                if (emp.isEmployeeOfTheMonth()) {
+                    throw new Exception("O funcionário " + emp.getName() + " já está marcado como funcionário do mês!");
+                }
             }
         }
-        return true;
+
+        return boxEmployeeOfTheMonth;
+    }
+
+    private LocalDate getDateOfTextField() throws Exception {
+        LocalDate localDate = DateManipulation.stringToLocalDate(view.getFfdAdmission().getText());
+
+        if (localDate.isAfter(LocalDate.now())) {
+            throw new Exception("Não é possível definir uma data de admissão após que o dia atual!");
+        }
+
+        if (localDate.isBefore(LocalDate.of(1969, Month.DECEMBER, 31))) {
+            throw new Exception("Por favor, entre com uma data válida!");
+        }
+
+        return localDate;
+    }
+
+    private int getAgeOfTextField() throws Exception {
+        int age = Integer.parseInt(view.getFfdAge().getText());
+
+        if (age < 16) {
+            throw new Exception("Não é possível cadastrar um funcionário tão novo!");
+        }
+
+        return age;
+    }
+
+    private int getNumberOfAbsenceOfTextField() throws Exception {
+        int numberOfAbsence = Integer.parseInt(view.getTfdAbsence().getText());
+
+        if (numberOfAbsence < 0) {
+            throw new Exception("Número de faltas deve ser maior ou igual a zero!");
+        }
+
+        return numberOfAbsence;
     }
 
     public void createNewEmployee() throws Exception {
@@ -83,14 +124,28 @@ public class KeepEmployeePresenter {
         employee.setId(generateRandomId());
         employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
         employee.setName(view.getTfdName().getText());
-        employee.setAge(Integer.parseInt(view.getFfdAge().getText()));
+        employee.setAge(getAgeOfTextField());
         createAllBonusOfEmployee();
         employee.setBaseSalary(getAndConvertSalaryField());
         employee.setSalary(getAndConvertSalaryField());
-        employee.setNumberOfAbsence(Integer.parseInt(view.getTfdAbsence().getText()));
-        employee.setAdmissionDate(DateManipulation.stringToLocalDate(view.getFfdAdmission().getText()));
+        employee.setNumberOfAbsence(getNumberOfAbsenceOfTextField());
+        employee.setEmployeeOfTheMonth(getSelectEmployeeOfTheMonth());
+        employee.setAdmissionDate(getDateOfTextField());
 
-        verifyEmployeeOfTheMonthCondition();
+    }
+
+    public void getTextInFieldsAndSetEmployee() throws Exception {
+        checkFieldsIsEmpty();
+
+        employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
+        employee.setName(view.getTfdName().getText());
+        employee.setAge(getAgeOfTextField());
+        employee.getBonusCollection().getListBonus().set(0, getInstanceOfBonus());
+        employee.setSalary(getAndConvertSalaryField());
+        employee.setNumberOfAbsence(getNumberOfAbsenceOfTextField());
+        employee.setEmployeeOfTheMonth(getSelectEmployeeOfTheMonth());
+        employee.setAdmissionDate(getDateOfTextField());
+
     }
 
     private void createAllBonusOfEmployee() throws Exception {
@@ -116,10 +171,15 @@ public class KeepEmployeePresenter {
         return UUID.randomUUID().toString();
     }
 
-    private double getAndConvertSalaryField() {
-        BigDecimal wageValueBigDecimal = view.getTfdSalary().getValue();
+    private double getAndConvertSalaryField() throws Exception {
+        BigDecimal salaryValueBigDecimal = view.getTfdSalary().getValue();
+        double salary = salaryValueBigDecimal.doubleValue();
 
-        return wageValueBigDecimal.doubleValue();
+        if (salary < 0) {
+            throw new Exception("Não é possível inserir um salário negativo!");
+        }
+
+        return salary;
     }
 
     private Bonus getInstanceOfBonus() {
@@ -133,30 +193,6 @@ public class KeepEmployeePresenter {
         }
 
         return null;
-    }
-
-    public void getTextInFieldsAndSetEmployee() throws Exception {
-        checkFieldsIsEmpty();
-
-        employee.setOccupation(String.valueOf(view.getCbxOccupation().getSelectedItem()));
-        employee.setName(view.getTfdName().getText());
-        employee.setAge(Integer.parseInt(view.getFfdAge().getText()));
-        employee.getBonusCollection().getListBonus().set(0, getInstanceOfBonus());
-        employee.setSalary(getAndConvertSalaryField());
-        employee.setNumberOfAbsence(Integer.parseInt(view.getTfdAbsence().getText()));
-        employee.setAdmissionDate(DateManipulation.stringToLocalDate(view.getFfdAdmission().getText()));
-
-        verifyEmployeeOfTheMonthCondition();
-    }
-
-    public void verifyEmployeeOfTheMonthCondition() throws Exception {
-        if (view.getChbEmployeeOfTheMonth().isSelected()) {
-            if (checkIfEmployeeOfTheMonthIsUnique()) {
-                employee.setEmployeeOfTheMonth(true);
-            }
-        } else {
-            employee.setEmployeeOfTheMonth(false);
-        }
     }
 
     public void loadFields() throws Exception {

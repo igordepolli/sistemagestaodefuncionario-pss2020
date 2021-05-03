@@ -44,6 +44,7 @@ public class JsonLog implements ILog {
         JSONObject obj = new JSONObject();
         obj.put("Salário calculado para o(s) funcionário(s)", array);
         file.write(obj.toString());
+        file.write("\n");
         file.flush();
     }
 
@@ -52,6 +53,7 @@ public class JsonLog implements ILog {
         JSONObject obj = new JSONObject();
         obj.put("Error:", errorMessage);
         file.write(obj.toString());
+        file.write("\n");
         file.flush();
     }
 
